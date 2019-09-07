@@ -1,12 +1,20 @@
 import React from 'react';
-import './App.css';
+import PropTypes from 'prop-types';
+import { BrowserRouter as Router , Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
-function App() {
-  return (
-    <div className="App">
-      <p>CRITERIA DASHBOARD</p>
-    </div>
-  );
+import Main from './components/Main'
+
+const  App = ({store}) => (
+  <Provider store={store}>
+    <Router>
+      <Route path = "/:filter?" component={ Main } />
+    </Router>
+  </Provider>
+)
+
+App.propTypes = {
+  store : PropTypes.object.isRequired
 }
 
 export default App;
