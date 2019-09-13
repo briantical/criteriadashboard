@@ -1,6 +1,6 @@
-.Main {
+.dashboard{
+    width: 100vw;
     height: 100%;
     display: flex;
     color: rgba(189, 189, 192, 1);
-  }
-  
+}

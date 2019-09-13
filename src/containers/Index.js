@@ -1,9 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import './Main.css';
 
 import { Switch, Route , Redirect } from 'react-router-dom';
-import { Login, Register,Profile, Dashboard , NoMatch} from './views/pages';
+import { Login, Register,Profile, Dashboard , NoMatch} from './pages';
 
 import { setActiveUserId } from '../actions'
 
@@ -16,13 +15,14 @@ const mapDispatchToProps = {
   setActiveUserId
 }
 
-const Main = (props) => {
+const Index = (props) => {
   return (
     <Switch>
       {/* Redirect all to the login page */}
-      <Route exact path='/' render={()=>(
+      {/* <Route exact path='/' render={()=>(
         props.activeUser ? (<Dashboard/>) : (<Redirect to='/login'/>)
-      )}/>
+      )}/> */}
+      <Route path='/' component={ Dashboard }/>
       <Route path='/login' component={ Login }/>
       <Route path='/register' component={ Register }/>
       <Route path='/profile' component={ Profile }/>
@@ -32,4 +32,4 @@ const Main = (props) => {
   );
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Main);
+export default connect(mapStateToProps,mapDispatchToProps)(Index);
