@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { Spinner } from 'react-bootstrap';
+
+import './Login.css';
 
 export class Login extends Component {
     componentDidMount() {
@@ -24,10 +26,11 @@ export class Login extends Component {
 
     render() {
         return (
-            <div>
-                <p>THIS IS THE LOGIN PAGE</p>
-                <Link to="/register" >REGISTER</Link>
-            </div>
+          <div className='login'>
+            <Spinner animation="grow" role="status" size="sm" style={{color:'#4F0B0C'}}>
+              <span className="sr-only">Loading...</span>
+            </Spinner>
+          </div>
         )
     }
 }
