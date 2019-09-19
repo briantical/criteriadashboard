@@ -19,10 +19,10 @@ const Index = (props) => {
   return (
     <Switch>
       {/* Redirect all to the login page */}
-      {/* <Route exact path='/' render={()=>(
+      <Route exact path='/' render={()=>(
         props.activeUser ? (<Dashboard/>) : (<Redirect to='/login'/>)
-      )}/> */}
-      <Route path='/' component={ Dashboard }/>
+      )}/>
+      {/* <Route path='/' component={ Dashboard }/> */}
       <Route path='/login' component={ Login }/>
       <Route path='/register' component={ Register }/>
       <Route path='/profile' component={ Profile }/>

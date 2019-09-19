@@ -7,16 +7,13 @@ export class Login extends Component {
     componentDidMount() {
         let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkN2VhMGE0MTkyNGYxMGI5MTg3NDczZiIsImlhdCI6MTU2ODc1MzkwOSwiZXhwIjoxNTcxMzQ1OTA5fQ.xh1xXYb4OLXUMYvKYRsugxektjOgKpwCx2O42qY7o_Q";
         let config = {
-            headers: {'Authorization': "bearer " + token}
+            headers: {
+              'Authorization': "bearer " + token
+            }
         };
         
-        // let bodyParameters = {
-        //    key: "value"
-        // }
-        
-        axios.post( 
+        axios.get( 
           'http://localhost:3000/api/v1/cake/?skip=0&limit=1&search=cakeDetail',
-        //  bodyParameters,
           config
         ).then((response) => {
           console.log(response)
