@@ -8,3 +8,7 @@
     align-self: center;
     justify-self: center;
 }
+
+.displayErrors input:invalid {
+    border-color: red;
+  }
