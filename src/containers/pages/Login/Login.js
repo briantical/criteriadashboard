@@ -4,30 +4,33 @@ import axios from 'axios';
 import { withRouter , Link } from 'react-router-dom';
 
 import './Login.css';
-import { setActiveUserToken }  from '../../../actions'
+import { setActiveUserToken ,setErrorMessage }  from '../../../actions';
 
 export class Login extends Component {
-  constructor() {
-      super()
-      this.state ={
-        displayErrors : false
-      }
-  }
-
+  
    signin = (email,password) =>{
     let params ={
       email,
       password
     }
+    let options = {
+      responseType: "json"
+    };
     
     axios.post( 
       'http://localhost:3000/api/v1/auth/sign-in',
-      params
+      params,
+      options
     ).then((response) => {
+      let errorMessage = {message: "", show: false};
       this.props.setActiveUserToken(response.data.token);
+      this.props.setErrorMessage(errorMessage);
       this.props.history.push('/');
     }).catch((error) => {
-      console.log(error)
+      let message = error.response.data.message;
+      let show = true;
+      let theError = {message,show}
+      this.props.setErrorMessage(theError);
     });
   }
 
@@ -35,7 +38,9 @@ export class Login extends Component {
     event.preventDefault();
     if(!event.target.checkValidity()){
       // form is invalid! so we do nothing
-      this.setState({displayErrors : true})
+      let message="";
+      let show=true;
+      this.props.setErrorMessage({message,show});
       return;
     }
     const form = event.target;
@@ -48,13 +53,13 @@ export class Login extends Component {
   }
 
   render() {
-    const { displayErrors } = this.state;
+    const { errorMessage } = this.props;
     return (
       <div className='login'>
         <form 
           onSubmit={this.handleSubmit} 
           noValidate 
-          className={displayErrors ? 'displayErrors' : ''}>
+          className={errorMessage.show ? 'displayErrors' : ''}>
         <table>
           <tbody>
             <tr>
@@ -79,18 +84,21 @@ export class Login extends Component {
         </form>
         
         <Link to="/register" >SIGN UP</Link>
+
+        <p>{errorMessage.message}</p>
       </div>
     )
   }
 }
 
 const mapStateToProps = (state) => {
-  const { activeUser } = state;
-  return { activeUser };
+  const { errorMessage } = state;
+  return { errorMessage };
 }
 
 const mapDispatchToProps = {
-  setActiveUserToken    
+  setActiveUserToken,
+  setErrorMessage  
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));

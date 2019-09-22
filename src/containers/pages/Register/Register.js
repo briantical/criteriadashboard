@@ -3,54 +3,62 @@ import { connect } from 'react-redux';
 import axios from 'axios';
 import { withRouter , Link } from 'react-router-dom';
 
-export class Register extends Component {
-    constructor() {
-        super()
-        this.state ={
-          displayErrors : false
-        }
-    }
-  
-     signup = (email,password) =>{
-      let params ={
-        email,
-        password
-      }
-      
-      axios.post( 
-        'http://localhost:3000/api/v1/auth/sign-up',
-        params
-      ).then((response) => {
-        this.props.history.push('/login');
-      }).catch((error) => {
-        console.log('Error' + error)
-      });
-    }
+import { setErrorMessage }  from '../../../actions';
 
-    handleSubmit = (event) =>{
-        event.preventDefault();
-        if(!event.target.checkValidity()){
-          // form is invalid! so we do nothing
-          this.setState({displayErrors : true})
-          return;
-        }
-        const form = event.target;
-        const data = new FormData(form);
+export class Register extends Component {
+
+    signup = (email,password) =>{
+    let params ={
+      email,
+      password
+    }
+    let options = {
+      responseType: "json"
+    };
     
-        let email = data.get('email');
-        let password = data.get('password');
-    
-        this.signup(email , password);
+    axios.post( 
+      'http://localhost:3000/api/v1/auth/sign-up',
+      params,
+      options,
+    ).then((response) => {
+      let errorMessage = {message: "", show: false};
+      this.props.setErrorMessage(errorMessage);
+      this.props.history.push('/login');
+    })
+    .catch((error) => {
+      let message = error.response.data.message;
+      let show = true;
+      let theError = {message,show}
+      this.props.setErrorMessage(theError);
+    });
+  }
+
+  handleSubmit = (event) =>{
+      event.preventDefault();
+      if(!event.target.checkValidity()){
+        // form is invalid! so we do nothing
+        let message="";
+        let show=true;
+        this.props.setErrorMessage({message,show});
+        return;
       }
+      const form = event.target;
+      const data = new FormData(form);
+  
+      let email = data.get('email');
+      let password = data.get('password');
+  
+      this.signup(email , password);
+    }
 
     render() {
-        const { displayErrors } = this.state;
+        const { errorMessage } = this.props;
         return (
         <div className='login'>
             <form 
             onSubmit={this.handleSubmit} 
             noValidate 
-            className={displayErrors ? 'displayErrors' : ''}>
+            className={errorMessage.show ? 'displayErrors' : ''}>
             <table>
             <tbody>
                 <tr>
@@ -75,18 +83,19 @@ export class Register extends Component {
             </form>
             
             <Link to="/login" >Login instead</Link>
+            <p>{errorMessage.message}</p>
         </div>
         )
     }
 }
 
 const mapStateToProps = (state) => {
-    const { activeUser } = state;
-    return { activeUser };
+    const { errorMessage } = state;
+    return {  errorMessage};
 };
 
 const mapDispatchToProps = {
-    
+    setErrorMessage
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Register))
