@@ -22,12 +22,12 @@ export class Login extends Component {
       params,
       options
     ).then((response) => {
-      let token = response.data.token;
+      const { token, user:{profile:{complete}}} = response.data;
       let errorMessage = {message: "", show: false};
       this.props.setActiveUserToken(token);
       localStorage.setItem('userToken',token);
       this.props.setErrorMessage(errorMessage);
-      this.props.history.push('/');
+      complete ? this.props.history.push('/') : this.props.history.push('/profile');
     }).catch((error) => {
       let message = error.response.data.message;
       let show = true;
