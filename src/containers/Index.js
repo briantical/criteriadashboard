@@ -15,12 +15,14 @@ const mapDispatchToProps = {
   setActiveUserId
 }
 
+let token = localStorage.getItem('userToken');
+
 const Index = (props) => {
   return (
     <Switch>
       {/* Redirect all to the login page */}
       <Route exact path='/' render={()=>(
-        props.activeUser ? (<Dashboard/>) : (<Redirect to='/login'/>)
+        token ? (<Dashboard/>) : (<Redirect to='/login'/>)
       )}/>
       {/* <Route path='/' component={ Dashboard }/> */}
       <Route path='/login' component={ Login }/>

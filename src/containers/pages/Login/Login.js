@@ -22,8 +22,10 @@ export class Login extends Component {
       params,
       options
     ).then((response) => {
+      let token = response.data.token;
       let errorMessage = {message: "", show: false};
-      this.props.setActiveUserToken(response.data.token);
+      this.props.setActiveUserToken(token);
+      localStorage.setItem('userToken',token);
       this.props.setErrorMessage(errorMessage);
       this.props.history.push('/');
     }).catch((error) => {
