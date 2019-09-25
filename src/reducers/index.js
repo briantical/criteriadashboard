@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
-import activeUser from './activeUser';
+import user from './user';
 import typing from './typing';
 import errorMessage from './errorMessage';
 
 export default combineReducers({
-    activeUser,
+    user,
     typing,
     errorMessage
 })

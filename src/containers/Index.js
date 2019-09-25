@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Switch, Route , Redirect } from 'react-router-dom';
 import { Login, Register,Profile, Dashboard , NoMatch} from './pages';
 
-import { setActiveUserId } from '../actions'
+import { setActiveUser } from '../actions'
 
 const mapStateToProps = ( state , ownProps ={ } ) => {
   const { activeUser } = state;
@@ -12,12 +12,12 @@ const mapStateToProps = ( state , ownProps ={ } ) => {
 };
 
 const mapDispatchToProps = {
-  setActiveUserId
+  setActiveUser
 }
 
 let token = localStorage.getItem('userToken');
 
-const Index = (props) => {
+const Index = () => {
   return (
     <Switch>
       {/* Redirect all to the login page */}

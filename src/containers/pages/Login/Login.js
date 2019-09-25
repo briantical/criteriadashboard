@@ -4,7 +4,7 @@ import axios from 'axios';
 import { withRouter , Link } from 'react-router-dom';
 
 import './Login.css';
-import { setActiveUserToken ,setErrorMessage }  from '../../../actions';
+import { setActiveUser ,setErrorMessage }  from '../../../actions';
 
 export class Login extends Component {
   
@@ -22,9 +22,9 @@ export class Login extends Component {
       params,
       options
     ).then((response) => {
-      const { token, user:{profile:{complete}}} = response.data;
+      const { token, user:{profile:{complete}},user} = response.data;  
       let errorMessage = {message: "", show: false};
-      this.props.setActiveUserToken(token);
+      this.props.setActiveUser(user);
       localStorage.setItem('userToken',token);
       this.props.setErrorMessage(errorMessage);
       complete ? this.props.history.push('/') : this.props.history.push('/profile');
@@ -39,7 +39,6 @@ export class Login extends Component {
   handleSubmit = (event) =>{
     event.preventDefault();
     if(!event.target.checkValidity()){
-      // form is invalid! so we do nothing
       let message="";
       let show=true;
       this.props.setErrorMessage({message,show});
@@ -99,7 +98,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  setActiveUserToken,
+  setActiveUser,
   setErrorMessage  
 }
 
