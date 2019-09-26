@@ -1,4 +1,4 @@
-import { SET_ACTIVE_USER , SET_TYPING_VALUE , SET_ACTIVE_USER_TOKEN, SET_ERROR_MESSAGE} from "../constants/action-types";
+import { SET_ACTIVE_USER , SET_TYPING_VALUE , SET_USER_TOKEN, SET_ERROR_MESSAGE} from "../constants/action-types";
 
 export const setActiveUser = user => ({
     type: SET_ACTIVE_USER,
@@ -10,12 +10,13 @@ export const setTypingValue = value => ({
     payload: value
 });
 
-export const setActiveUserToken = token => ({
-    type: SET_ACTIVE_USER_TOKEN,
-    payload: token
-});
-
 export const setErrorMessage = error => ({
     type: SET_ERROR_MESSAGE,
     payload: error
 });
+
+export const setUserToken = token => ({
+    type: SET_USER_TOKEN,
+    payload: token
+});
+

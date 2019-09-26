@@ -4,7 +4,7 @@ import axios from 'axios';
 import { withRouter , Link } from 'react-router-dom';
 
 import './Login.css';
-import { setActiveUser ,setErrorMessage }  from '../../../actions';
+import { setActiveUser, setErrorMessage, setUserToken }  from '../../../actions';
 
 export class Login extends Component {
   
@@ -12,7 +12,7 @@ export class Login extends Component {
     let params ={
       email,
       password
-    }
+    };
     let options = {
       responseType: "json"
     };
@@ -25,6 +25,7 @@ export class Login extends Component {
       const { token, user:{profile:{complete}},user} = response.data;  
       let errorMessage = {message: "", show: false};
       this.props.setActiveUser(user);
+      this.props.setUserToken(token);
       localStorage.setItem('userToken',token);
       this.props.setErrorMessage(errorMessage);
       complete ? this.props.history.push('/') : this.props.history.push('/profile');
@@ -99,6 +100,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   setActiveUser,
+  setUserToken,
   setErrorMessage  
 }
 
