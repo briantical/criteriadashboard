@@ -8,19 +8,16 @@ import { setActiveUser ,setErrorMessage, setUserToken }  from '../../../actions'
 export class Profile extends Component {
     //Complete the user profile
     complete = (...details) =>{
-        const data2 = details.reduce(function(obj,item){
-            obj[item.key] = item.value; 
-            return obj;
-          }, {});
-        console.log(data2)
+        const [ fullName , avatar, phoneNumber, userName, address] = details;
+        
         let data = {
-            // fullName,
-            // avatar,
-            // phoneNumber,
-            // userName,
-            // address
+            fullName,
+            avatar,
+            phoneNumber,
+            userName,
+            address
         };
-        console.log('The data' + JSON.stringify(data))
+        
         let options = {
             responseType: "json",
         }
@@ -62,6 +59,20 @@ export class Profile extends Component {
 
     };
 
+    success = (pos) => {
+        let coordinates = pos.coords;
+      
+        console.log('Your current position is:');
+        console.log(`More or less ${coordinates.accuracy} meters.`);
+
+        return [coordinates.latitude, coordinates.longitude];
+    }
+
+    error = (err) => {
+        console.warn(`ERROR(${err.code}): ${err.message}`);
+      }
+      
+
     handleSubmit = (event) =>{
         event.preventDefault();
         if(!event.target.checkValidity()){
@@ -77,9 +88,18 @@ export class Profile extends Component {
         let avatar = data.get('avatar');
         let phoneNumber = data.get('phonenumber');
         let userName = data.get('username');
-        let address = data.get('address');
+        // let address = data.get('address');
+
+        let options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+          };
+        
+          
+        let address = navigator.geolocation.getCurrentPosition(this.success, this.error, options);
     
-        this.complete({fullName} , {avatar}, {phoneNumber}, {userName}, {address});
+        this.complete(fullName , avatar, phoneNumber, userName, address);
       };
 
     render() {
