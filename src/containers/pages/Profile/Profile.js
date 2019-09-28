@@ -8,14 +8,14 @@ import { setActiveUser ,setErrorMessage, setUserToken }  from '../../../actions'
 export class Profile extends Component {
     //Complete the user profile
     complete = (...details) =>{
-        const [ fullName , avatar, phoneNumber, userName, address] = details;
+        const [ fullName , avatar, phoneNumber, userName, coordinates] = details;
         
         let data = {
             fullName,
             avatar,
             phoneNumber,
             userName,
-            address
+            coordinates
         };
         
         let options = {
@@ -88,7 +88,7 @@ export class Profile extends Component {
         let avatar = data.get('avatar');
         let phoneNumber = data.get('phonenumber');
         let userName = data.get('username');
-        // let address = data.get('address');
+        let address = data.get('address');
 
         let options = {
             enableHighAccuracy: true,
@@ -96,10 +96,9 @@ export class Profile extends Component {
             maximumAge: 0
           };
         
-          
-        let address = navigator.geolocation.getCurrentPosition(this.success, this.error, options);
+        let coordinates = navigator.geolocation.getCurrentPosition(this.success, this.error, options);
     
-        this.complete(fullName , avatar, phoneNumber, userName, address);
+        this.complete(fullName , avatar, phoneNumber, userName, coordinates);
       };
 
     render() {
