@@ -4,7 +4,7 @@ import axios from 'axios';
 import { withRouter , Link } from 'react-router-dom';
 
 import './Login.css';
-import { setActiveUser, setErrorMessage, setUserToken }  from '../../../actions';
+import { setActiveUser, setErrorMessage, setUserToken, setUserEmail }  from '../../../actions';
 
 export class Login extends Component {
   
@@ -24,13 +24,19 @@ export class Login extends Component {
     ).then((response) => {
       const { token, user:{profile:{complete}},user} = response.data;  
       let errorMessage = {message: "", show: false};
+      console.log('user 1:' + this.props.user)
       this.props.setActiveUser(user);
+      console.log('user 2:' + JSON.stringify(this.props.user))
       this.props.setUserToken(token);
       localStorage.setItem('userToken',token);
+      this.props.setUserEmail(email);
+      console.log('user 3:' + JSON.stringify(this.props.user))
       this.props.setErrorMessage(errorMessage);
-      complete ? this.props.history.push('/') : this.props.history.push('/profile');
+      console.log('The complete: ' + complete)
+      complete ? this.props.history.push('/') : this.props.history.push({pathname:'/profile',search:email});
     }).catch((error) => {
-      let message = error.response.data.message;
+      console.log('The error: ' + error)
+      let message = 'error';
       let show = true;
       let theError = {message,show}
       this.props.setErrorMessage(theError);
@@ -94,14 +100,15 @@ export class Login extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { errorMessage } = state;
-  return { errorMessage };
+  const { errorMessage, user } = state;
+  return { errorMessage, user };
 }
 
 const mapDispatchToProps = {
   setActiveUser,
   setUserToken,
-  setErrorMessage  
+  setErrorMessage,
+  setUserEmail 
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));

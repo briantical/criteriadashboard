@@ -2,8 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
+import firebase from '../../../firebase';
 
 import { setActiveUser ,setErrorMessage, setUserToken }  from '../../../actions';
+
+const storageService = firebase.storage();
+const storageRef = storageService.ref();
+
+let selectedImage;
+const avatar = "https://firebasestorage.googleapis.com/v0/b/criteria-66b60.appspot.com/o/avatar%2Favatar.png?alt=media&token=645c6238-0df7-4c7d-8417-7cb97b22c070";
 
 export class Profile extends Component {
     //Complete the user profile
@@ -49,9 +56,34 @@ export class Profile extends Component {
         });
     };
 
+    showImage = (src,target) =>{
+        var fr = new FileReader();
+
+        fr.onload = function(){
+            target.src = fr.result;
+        }
+        fr.readAsDataURL(src.files[0]);
+    }
+
+    handleImageUploadChange = () =>{
+        var src = document.getElementById("select_image");
+        var target = document.getElementById("target");
+        this.showImage(src, target);
+    };
+
     //Upload the image to firebase and return the URL to the image
     uploadImage = () =>{
-
+        const uploadTask = storageRef.child(`avatar/${selectedImage.name}`).put(selectedImage); 
+        //create a child directory called images, and place the file inside this directory
+        uploadTask.on('state_changed', (snapshot) => {
+            // Observe state change events such as progress, pause, and resume
+        }, (error) => {
+            // Handle unsuccessful uploads
+            console.log(error);
+        }, () => {
+            // Do something once upload is complete
+            console.log('success');
+        });
     };
 
     //Get the cuuurent location coordinates
@@ -61,10 +93,6 @@ export class Profile extends Component {
 
     success = (pos) => {
         let coordinates = pos.coords;
-      
-        console.log('Your current position is:');
-        console.log(`More or less ${coordinates.accuracy} meters.`);
-
         return [coordinates.latitude, coordinates.longitude];
     }
 
@@ -85,11 +113,10 @@ export class Profile extends Component {
         const data = new FormData(form);
     
         let fullName = data.get('fullname');
-        let avatar = data.get('avatar');
+        let avatar = data.get('avatar');    
         let phoneNumber = data.get('phonenumber');
         let userName = data.get('username');
-        let address = data.get('address');
-
+        
         let options = {
             enableHighAccuracy: true,
             timeout: 5000,
@@ -102,8 +129,9 @@ export class Profile extends Component {
       };
 
     render() {
-        const { user , errorMessage } = this.props;
-        const { email} = user || '';
+        const { errorMessage, history:{location:{search}}} = this.props;
+        let email = search.slice(1,search.length);
+        
         return (
             <div>
                 <p>COMPLETE PROFILE PAGE</p>
@@ -115,7 +143,17 @@ export class Profile extends Component {
                     <table>
                         <tbody>
                             <tr>
-                                <td><img src={require ("../../../assets/MOI.jpg")} className="rounded-circle rounded-sm" style={{height:50,width:50}} alt="profilepic"/></td>
+                                <td>
+                                    <div  id="imagesubmit">
+                                    <input type="file" className="file-select" accept="image/*" onChange={this.handleImageUploadChange} id="select_image"/>
+                                        <img 
+                                            id="target"
+                                            // src={avatar}
+                                            className="rounded-circle rounded-sm" 
+                                            style={{height:50,width:50,borderRadius:50}} 
+                                            alt="profilepic"/>
+                                    </div>
+                                </td>
                                 <td>NAME:</td>
                                 <td><input name="fullname" id="fullname" autoComplete="off" required/> </td>
                             </tr>
@@ -129,7 +167,7 @@ export class Profile extends Component {
                             </tr>
                             <tr>
                                 <td>EMAIL</td>
-                                <td><input name="email" id="email" autoComplete="off" value={email} readOnly/></td>
+                                <td><input name="email" id="email" autoComplete="off" placeholder={email} readOnly/></td>
                             </tr>
                             <tr>
                                 <td>PHONE NUMBER</td>
@@ -146,7 +184,7 @@ export class Profile extends Component {
 
 const mapStateToProps = (state) => {
     const { user, token, errorMessage } = state;
-    return { user ,token,  errorMessage }
+    return { user ,token,  errorMessage };
 };
 
 const mapDispatchToProps = {
