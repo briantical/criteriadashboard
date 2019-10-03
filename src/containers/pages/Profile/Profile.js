@@ -4,13 +4,14 @@ import axios from 'axios';
 import { withRouter } from 'react-router-dom';
 import firebase from '../../../firebase';
 
+import './Profile.css';
+
 import { setActiveUser ,setErrorMessage, setUserToken }  from '../../../actions';
 
 const storageService = firebase.storage();
 const storageRef = storageService.ref();
 
-let selectedImage;
-const avatar = "https://firebasestorage.googleapis.com/v0/b/criteria-66b60.appspot.com/o/avatar%2Favatar.png?alt=media&token=645c6238-0df7-4c7d-8417-7cb97b22c070";
+const avatar = require('../../../assets/avatar.png');
 
 export class Profile extends Component {
     //Complete the user profile
@@ -56,34 +57,60 @@ export class Profile extends Component {
         });
     };
 
-    showImage = (src,target) =>{
-        var fr = new FileReader();
-
-        fr.onload = function(){
-            target.src = fr.result;
+    showImage = (src,profile) =>{
+        let reader = new FileReader();
+        reader.onload = function(){
+            profile.src = reader.result;
         }
-        fr.readAsDataURL(src.files[0]);
+        reader.readAsDataURL(src.files[0]);
+
+        this.uploadImage(src.files[0]);
     }
 
     handleImageUploadChange = () =>{
-        var src = document.getElementById("select_image");
-        var target = document.getElementById("target");
-        this.showImage(src, target);
+        let src = document.getElementById("select_image");
+        let profile = document.getElementById("profile");
+        this.showImage(src, profile);
     };
 
     //Upload the image to firebase and return the URL to the image
-    uploadImage = () =>{
-        const uploadTask = storageRef.child(`avatar/${selectedImage.name}`).put(selectedImage); 
-        //create a child directory called images, and place the file inside this directory
+    //create a child directory called images, and place the file inside this directory
+    uploadImage = (selectedImage) =>{
+        const uploadTask = storageRef
+                            .child(`avatar/${Date.now()+'.png'}`)
+                            .put(selectedImage); 
+        
         uploadTask.on('state_changed', (snapshot) => {
             // Observe state change events such as progress, pause, and resume
+            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+            var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            console.log('Upload is ' + progress + '% done');
+            switch (snapshot.state) {
+                case firebase.storage.TaskState.PAUSED: // or 'paused'
+                    console.log('Upload is paused');
+                    break;
+                case firebase.storage.TaskState.RUNNING: // or 'running'
+                    console.log('Upload is running');
+                    break;
+                default:
+                    console.log('Unknown state');
+                    break;
+            }
         }, (error) => {
             // Handle unsuccessful uploads
-            console.log(error);
+            //console.log('error' + error);  
         }, () => {
-            // Do something once upload is complete
-            console.log('success');
-        });
+            // Handle successful uploads on complete
+            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+            uploadTask
+                .snapshot
+                .ref
+                .getDownloadURL()
+                .then((downloadURL) => {
+                console.log('File available at', downloadURL);
+            });
+        })
+        uploadTask.then((sucess)=>console.log(sucess)).catch((error)=>this.props.setErrorMessage(error))
     };
 
     //Get the cuuurent location coordinates
@@ -113,7 +140,7 @@ export class Profile extends Component {
         const data = new FormData(form);
     
         let fullName = data.get('fullname');
-        let avatar = data.get('avatar');    
+        let avatar = data.get('profile');    
         let phoneNumber = data.get('phonenumber');
         let userName = data.get('username');
         
@@ -144,14 +171,9 @@ export class Profile extends Component {
                         <tbody>
                             <tr>
                                 <td>
-                                    <div  id="imagesubmit">
-                                    <input type="file" className="file-select" accept="image/*" onChange={this.handleImageUploadChange} id="select_image"/>
-                                        <img 
-                                            id="target"
-                                            // src={avatar}
-                                            className="rounded-circle rounded-sm" 
-                                            style={{height:50,width:50,borderRadius:50}} 
-                                            alt="profilepic"/>
+                                    <div  id="imageholder">
+                                        <img id="profile" src={avatar} className="theImage" alt="profilepic"/>
+                                        <input type="file"  accept="image/*" onChange={this.handleImageUploadChange} id="select_image"/>
                                     </div>
                                 </td>
                                 <td>NAME:</td>
@@ -177,6 +199,7 @@ export class Profile extends Component {
                     </table>
                     <button>COMPLETE</button>
                 </form>
+                {this.props.errorMessage.message}
             </div>
         )
     }

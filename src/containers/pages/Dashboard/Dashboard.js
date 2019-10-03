@@ -8,7 +8,6 @@ import { Sidebar , Main } from '../components'
 
 export class Dashboard extends Component {
     render() {
-        console.log('Dashboard user' + JSON.stringify(this.props.user))
         return (
             <div className='dashboard'>
                 <Sidebar/>

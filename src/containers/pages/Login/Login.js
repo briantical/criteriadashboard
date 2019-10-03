@@ -22,23 +22,22 @@ export class Login extends Component {
       params,
       options
     ).then((response) => {
-      const { token, user:{profile:{complete}},user} = response.data;  
-      let errorMessage = {message: "", show: false};
-      console.log('user 1:' + this.props.user)
-      this.props.setActiveUser(user);
-      console.log('user 2:' + JSON.stringify(this.props.user))
-      this.props.setUserToken(token);
+      const { token, user:{profile:{complete}},user} = response.data;
+      const { setActiveUser, setUserToken, setUserEmail, setErrorMessage, history } = this.props;
+
+      
+      setActiveUser(user);
+      setUserToken(token);
       localStorage.setItem('userToken',token);
-      this.props.setUserEmail(email);
-      console.log('user 3:' + JSON.stringify(this.props.user))
-      this.props.setErrorMessage(errorMessage);
-      console.log('The complete: ' + complete)
-      complete ? this.props.history.push('/') : this.props.history.push({pathname:'/profile',search:email});
+      setUserEmail(email);
+
+      let errorMessage = {message: "", show: false};
+      setErrorMessage(errorMessage);
+
+      complete ? history.push('/') : history.push({pathname:'/profile',search:email});
+
     }).catch((error) => {
-      console.log('The error: ' + error)
-      let message = 'error';
-      let show = true;
-      let theError = {message,show}
+      let theError = {message:error ,show:true}
       this.props.setErrorMessage(theError);
     });
   }
@@ -46,9 +45,7 @@ export class Login extends Component {
   handleSubmit = (event) =>{
     event.preventDefault();
     if(!event.target.checkValidity()){
-      let message="";
-      let show=true;
-      this.props.setErrorMessage({message,show});
+      this.props.setErrorMessage({message:'',show:true});
       return;
     }
     const form = event.target;
@@ -92,8 +89,6 @@ export class Login extends Component {
         </form>
         
         <Link to="/register" >SIGN UP</Link>
-
-        <p>{errorMessage.message}</p>
       </div>
     )
   }
