@@ -56,26 +56,17 @@ export class Profile extends Component {
             this.props.setErrorMessage(theError);
         });
     };
-
-    showImage = (src,profile) =>{
-        let reader = new FileReader();
-        reader.onload = function(){
-            profile.src = reader.result;
-        }
-        reader.readAsDataURL(src.files[0]);
-
-        this.uploadImage(src.files[0]);
-    }
-
+ 
     handleImageUploadChange = () =>{
         let src = document.getElementById("select_image");
         let profile = document.getElementById("profile");
-        this.showImage(src, profile);
+        this.uploadImage(src, profile);
     };
 
     //Upload the image to firebase and return the URL to the image
     //create a child directory called images, and place the file inside this directory
-    uploadImage = (selectedImage) =>{
+    uploadImage = (src,profile) =>{
+        let selectedImage = src.files[0];
         const uploadTask = storageRef
                             .child(`avatar/${Date.now()+'.png'}`)
                             .put(selectedImage); 
@@ -98,19 +89,27 @@ export class Profile extends Component {
             }
         }, (error) => {
             // Handle unsuccessful uploads
-            //console.log('error' + error);  
+            console.log('error' + error);  
         }, () => {
             // Handle successful uploads on complete
             // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+            
             uploadTask
                 .snapshot
                 .ref
                 .getDownloadURL()
                 .then((downloadURL) => {
-                console.log('File available at', downloadURL);
-            });
+                    //Get the uploaded image's url and set it as the src
+                    let reader = new FileReader();
+                    reader.onload = function(){
+                        profile.src = downloadURL;
+                    }
+                    reader.readAsDataURL(src.files[0]);
+            })
         })
-        uploadTask.then((sucess)=>console.log(sucess)).catch((error)=>this.props.setErrorMessage(error))
+        uploadTask
+            .then(()=>console.log('sucessfully uploaded the user image'))
+            .catch((error)=>this.props.setErrorMessage(error))
     };
 
     //Get the cuuurent location coordinates
@@ -140,7 +139,7 @@ export class Profile extends Component {
         const data = new FormData(form);
     
         let fullName = data.get('fullname');
-        let avatar = data.get('profile');    
+        let avatar = document.getElementById('profile').src;    
         let phoneNumber = data.get('phonenumber');
         let userName = data.get('username');
         
@@ -150,6 +149,10 @@ export class Profile extends Component {
             maximumAge: 0
           };
         
+          console.log(...data);
+          console.log(document.getElementById('profile').src)
+          console.log('Avatar:' + avatar)
+
         let coordinates = navigator.geolocation.getCurrentPosition(this.success, this.error, options);
     
         this.complete(fullName , avatar, phoneNumber, userName, coordinates);
@@ -170,10 +173,10 @@ export class Profile extends Component {
                     <table>
                         <tbody>
                             <tr>
-                                <td>
+                                <td id="imageholder">
                                     <div  id="imageholder">
-                                        <img id="profile" src={avatar} className="theImage" alt="profilepic"/>
-                                        <input type="file"  accept="image/*" onChange={this.handleImageUploadChange} id="select_image"/>
+                                        <img id="profile" name="profile" src={avatar} className="theImage" alt="profilepic"/>
+                                        <input type="file"  accept="image/*" onChange={this.handleImageUploadChange} id="select_image" required/>
                                     </div>
                                 </td>
                                 <td>NAME:</td>
@@ -200,6 +203,7 @@ export class Profile extends Component {
                     <button>COMPLETE</button>
                 </form>
                 {this.props.errorMessage.message}
+            
             </div>
         )
     }
