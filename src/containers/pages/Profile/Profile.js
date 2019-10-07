@@ -11,6 +11,10 @@ import { setActiveUser ,setErrorMessage, setUserToken }  from '../../../actions'
 const storageService = firebase.storage();
 const storageRef = storageService.ref();
 
+const googleMapsClient = require('@google/maps').createClient({
+    key: process.env.REACT_APP_GOOGLE_MAPS_API
+  });
+
 const avatar = require('../../../assets/avatar.png');
 
 export class Profile extends Component {
@@ -112,21 +116,6 @@ export class Profile extends Component {
             .catch((error)=>this.props.setErrorMessage(error))
     };
 
-    //Get the cuuurent location coordinates
-    getAddress = () => {
-
-    };
-
-    success = (pos) => {
-        let coordinates = pos.coords;
-        return [coordinates.latitude, coordinates.longitude];
-    }
-
-    error = (err) => {
-        console.warn(`ERROR(${err.code}): ${err.message}`);
-      }
-      
-
     handleSubmit = (event) =>{
         event.preventDefault();
         if(!event.target.checkValidity()){
@@ -139,23 +128,29 @@ export class Profile extends Component {
         const data = new FormData(form);
     
         let fullName = data.get('fullname');
+        let address = data.get('address');
         let avatar = document.getElementById('profile').src;    
         let phoneNumber = data.get('phonenumber');
         let userName = data.get('username');
-        
-        let options = {
-            enableHighAccuracy: true,
-            timeout: 5000,
-            maximumAge: 0
-          };
-        
-          console.log(...data);
-          console.log(document.getElementById('profile').src)
-          console.log('Avatar:' + avatar)
 
-        let coordinates = navigator.geolocation.getCurrentPosition(this.success, this.error, options);
-    
-        this.complete(fullName , avatar, phoneNumber, userName, coordinates);
+        console.log('Address' + address);
+        
+        // Geocode an address.
+        googleMapsClient.geocode({
+            address
+        }, (err, response) => {
+            if (!err) {
+                let data = response.json.results
+                if (Array.isArray(data) || data.length) {
+                    // array does exist, is  an array, or is not empty
+                    let address = data[0];
+                    const {geometry:{location:{lat,lng}}} = address;
+
+                    let coordinates = [ lat, lng];
+                    this.complete(fullName , avatar, phoneNumber, userName, coordinates);
+                  }
+            }
+        });
       };
 
     render() {
