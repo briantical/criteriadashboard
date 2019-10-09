@@ -7,6 +7,7 @@ import firebase from '../../../firebase';
 import './Profile.css';
 
 import { setActiveUser ,setErrorMessage, setUserToken }  from '../../../actions';
+import secureStorage from '../../../utils/securelocalstorage';
 
 const storageService = firebase.storage();
 const storageRef = storageService.ref();
@@ -35,7 +36,7 @@ export class Profile extends Component {
         }
 
         let headers = {
-            'Authorization': 'Bearer ' + localStorage.getItem('userToken')
+            'Authorization': 'Bearer ' + secureStorage.getItem('token').token
         }
 
         axios.put(
@@ -133,8 +134,6 @@ export class Profile extends Component {
         let phoneNumber = data.get('phonenumber');
         let userName = data.get('username');
 
-        console.log('Address' + address);
-        
         // Geocode an address.
         googleMapsClient.geocode({
             address

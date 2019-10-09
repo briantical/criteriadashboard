@@ -1,11 +1,26 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import './Sidebarnav.css';
 
-const Sidebarnav = () =>(
-    <section className='sidebarnav'>
-        SIDEBAR NAV
-    </section>
-);
+export class Siderbarnav extends Component {
+    render() {
+        return (
+            <section className='sidebarnav'>
+                SIDEBAR NAV
+            </section>
+        )
+    }
+}
 
-export default Sidebarnav;
+const mapStateToProps = (state) => {
+    const { user } = state;
+    return { user };
+}
+
+const mapDispatchToProps = {
+    
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Siderbarnav));
