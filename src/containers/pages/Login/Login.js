@@ -5,7 +5,7 @@ import { withRouter , Link } from 'react-router-dom';
 
 import './Login.css';
 import { setActiveUser, setErrorMessage, setUserToken, setUserEmail }  from '../../../actions';
-import secureStorage from '../../../utils/securelocalstorage';
+import { secureStorage } from '../../../utils';
 
 export class Login extends Component {
   

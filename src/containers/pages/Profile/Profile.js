@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import firebase from '../../../firebase';
+
 
 import './Profile.css';
 
 import { setActiveUser ,setErrorMessage, setUserToken }  from '../../../actions';
-import secureStorage from '../../../utils/securelocalstorage';
+import { firebase, secureStorage }  from '../../../utils';
 
 const storageService = firebase.storage();
 const storageRef = storageService.ref();

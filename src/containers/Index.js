@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Switch, Route , Redirect } from 'react-router-dom';
 import { Login, Register,Profile, Dashboard , NoMatch} from './pages';
 
-import secureStorage from '../utils/securelocalstorage';
+import { secureStorage } from '../utils';
 
 const mapStateToProps = ( state , ownProps ={ } ) => {
   const { activeUser } = state;
