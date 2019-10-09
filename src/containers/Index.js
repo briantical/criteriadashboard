@@ -4,18 +4,15 @@ import { connect } from 'react-redux';
 import { Switch, Route , Redirect } from 'react-router-dom';
 import { Login, Register,Profile, Dashboard , NoMatch} from './pages';
 
-import { setActiveUser } from '../actions'
+import secureStorage from '../utils/securelocalstorage';
 
 const mapStateToProps = ( state , ownProps ={ } ) => {
   const { activeUser } = state;
   return { activeUser };
 };
 
-const mapDispatchToProps = {
-  setActiveUser
-}
-
-let token = localStorage.getItem('userToken');
+// returns { token: 'token' }
+let token = secureStorage.getItem('token');
 
 const Index = () => {
   return (
@@ -34,4 +31,4 @@ const Index = () => {
   );
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Index);
+export default connect(mapStateToProps)(Index);

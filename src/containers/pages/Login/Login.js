@@ -5,6 +5,7 @@ import { withRouter , Link } from 'react-router-dom';
 
 import './Login.css';
 import { setActiveUser, setErrorMessage, setUserToken, setUserEmail }  from '../../../actions';
+import secureStorage from '../../../utils/securelocalstorage';
 
 export class Login extends Component {
   
@@ -28,7 +29,7 @@ export class Login extends Component {
       
       setActiveUser(user);
       setUserToken(token);
-      localStorage.setItem('userToken',token);
+      secureStorage.setItem('token', {token});
       setUserEmail(email);
 
       let errorMessage = {message: "", show: false};
