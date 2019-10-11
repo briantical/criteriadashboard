@@ -1,4 +1,4 @@
-import { SET_ACTIVE_USER , SET_TYPING_VALUE , SET_USER_TOKEN, SET_ERROR_MESSAGE, SET_USER_EMAIL} from "../constants/action-types";
+import { SET_ACTIVE_USER , SET_TYPING_VALUE , SET_USER_TOKEN, SET_ERROR_MESSAGE, SET_USER_EMAIL, SET_MODAL_VISIBILITY} from "../constants/action-types";
 
 export const setActiveUser = user => ({
     type: SET_ACTIVE_USER,
@@ -23,5 +23,10 @@ export const setErrorMessage = error => ({
 export const setUserToken = token => ({
     type: SET_USER_TOKEN,
     payload: token
+});
+
+export const setModalVisibility = show => ({
+    type: SET_MODAL_VISIBILITY,
+    payload: show
 });
 

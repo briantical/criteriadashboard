@@ -1,0 +1,4 @@
+.profilemodal{
+    display: flex;
+    flex-direction: column;
+}
