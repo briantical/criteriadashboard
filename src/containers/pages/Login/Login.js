@@ -22,7 +22,8 @@ export class Login extends Component {
       'http://localhost:3000/api/v1/auth/sign-in',
       params,
       options
-    ).then((response) => {
+    )
+    .then((response) => {
       const { token, user:{profile:{complete}},user} = response.data;
       const { setActiveUser, setUserToken, setUserEmail, setErrorMessage, history } = this.props;
 
@@ -33,10 +34,9 @@ export class Login extends Component {
 
       let errorMessage = {message: "", show: false};
       setErrorMessage(errorMessage);
-      console.log('Login test')
-      complete ? history.push('/') : history.push({pathname:'/profile',search:email});
-      console.log('Login test')
-    }).catch((error) => {
+      complete ? history.push('/dashboard') : history.push({pathname:'/profile',search:email});
+    })
+    .catch((error) => {
       let theError = {message:error ,show:true}
       this.props.setErrorMessage(theError);
     });

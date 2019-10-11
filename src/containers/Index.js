@@ -13,16 +13,15 @@ const mapStateToProps = ( state , ownProps ={ } ) => {
 
 // returns { token: 'token' }
 let token = secureStorage.getItem('token');
-console.log('Index token: ' + token)
 
 const Index = () => {
   return (
     <Switch>
       {/* Redirect all to the login page */}
       <Route exact path='/' render={()=>(
-        token ? (<Dashboard/>) : (<Redirect to='/login'/>)
+        token ? (<Redirect to='/dashboard'/>) : (<Redirect to='/login'/>)
       )}/>
-      {/* <Route path='/' component={ Dashboard }/> */}
+      <Route path='/dashboard' component={ Dashboard }/>
       <Route path='/login' component={ Login }/>
       <Route path='/register' component={ Register }/>
       <Route path='/profile' component={ Profile }/>

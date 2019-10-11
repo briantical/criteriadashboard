@@ -18,13 +18,9 @@ import { withRouter } from 'react-router-dom';
             {headers}
           ).then((response) => {
             secureStorage.clear();
-            
-            console.log(props);
           })
           .then(()=>{
-              console.log('Its not dne')
-              props.history.push('/')
-              console.log('Its not dne')
+              props.history.push('/login');
             })
           .catch((error) => {
             let theError = {message:error ,show:true}
