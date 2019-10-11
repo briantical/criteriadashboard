@@ -10,7 +10,6 @@ let avatar = require('../../../../../assets/avatar.png');
 export class Siderbarnav extends Component {
 
     openModal = () =>{
-        console.log('qwerty');
         this.props.setModalVisibility(true);
     }
 
@@ -67,8 +66,8 @@ export class Siderbarnav extends Component {
 };
 
 const mapStateToProps = (state) => {
-    const { user , showModal } = state;
-    return { user , showModal };
+    const { user } = state;
+    return { user};
 }
 
 const mapDispatchToProps = {

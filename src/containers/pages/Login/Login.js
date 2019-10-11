@@ -26,7 +26,6 @@ export class Login extends Component {
       const { token, user:{profile:{complete}},user} = response.data;
       const { setActiveUser, setUserToken, setUserEmail, setErrorMessage, history } = this.props;
 
-      
       setActiveUser(user);
       setUserToken(token);
       secureStorage.setItem('token', {token});
@@ -34,9 +33,9 @@ export class Login extends Component {
 
       let errorMessage = {message: "", show: false};
       setErrorMessage(errorMessage);
-
+      console.log('Login test')
       complete ? history.push('/') : history.push({pathname:'/profile',search:email});
-
+      console.log('Login test')
     }).catch((error) => {
       let theError = {message:error ,show:true}
       this.props.setErrorMessage(theError);

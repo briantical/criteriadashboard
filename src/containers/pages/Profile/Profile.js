@@ -51,7 +51,7 @@ export class Profile extends Component {
             this.props.setErrorMessage(errorMessage);
             //Persist the user and token in state
             this.props.setActiveUser(user);
-            localStorage.setItem('userToken',token);
+            secureStorage.setItem('token', {token});
             //Redirect the user to the homepage of login page,
             this.props.history.push('/');
         }).catch((error) => {

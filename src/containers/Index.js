@@ -13,6 +13,7 @@ const mapStateToProps = ( state , ownProps ={ } ) => {
 
 // returns { token: 'token' }
 let token = secureStorage.getItem('token');
+console.log('Index token: ' + token)
 
 const Index = () => {
   return (
