@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import './Sidebarnav.css';
 import {setModalVisibility} from '../../../../../actions';
 
-const avatar = require('../../../../../assets/avatar.png');
+let avatar = require('../../../../../assets/avatar.png');
 
 export class Siderbarnav extends Component {
 
@@ -51,15 +51,16 @@ export class Siderbarnav extends Component {
     }
 
     render() {
-        
+        const { user } = this.props;
+    
+        avatar = (user != null && user.profile != null) ?  user.profile.avatar : avatar
+
         return (
             <section className='sidebarnav'>
                 <div onClick={this.handleOnClick} id='home'>HOME</div>
                 <div onClick={this.handleOnClick} id='search'>SEARCH</div>
                 <div onClick={this.handleOnClick} id='help'>HELP</div>
-                <div onClick={this.handleOnClick} id='profile'>
-                    <img src={avatar} alt='avatar'/>
-                </div>
+                <div onClick={this.handleOnClick} id='profile' style={{backgroundImage:`url(${avatar})`}}/>
             </section>
         )
     }
