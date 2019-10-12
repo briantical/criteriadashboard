@@ -5,11 +5,13 @@ import typing from './typing';
 import errorMessage from './errorMessage';
 import token from './token';
 import showModal from './showModal';
+import showPage from './showPage';
 
 export default combineReducers({
     user,
     typing,
     errorMessage,
     token,
-    showModal
+    showModal,
+    showPage
 });

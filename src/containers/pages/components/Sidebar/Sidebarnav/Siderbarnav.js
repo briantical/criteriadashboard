@@ -23,7 +23,7 @@ export class Siderbarnav extends Component {
         switch (event.target.id) {
             //Redirect the dashboard
             case 'home':
-                this.props.history.push('/');
+                this.props.history.push('/dashboard');
                 break;
 
             //Show the search modal
@@ -31,7 +31,7 @@ export class Siderbarnav extends Component {
 
                 break;
 
-            //Show the support page
+            //Show the support modal
             case 'help':
 
                 break;
@@ -44,7 +44,7 @@ export class Siderbarnav extends Component {
             
             //Redirect to Dashboard if all fails
             default:
-                this.props.history.push('/');
+                this.props.history.push('/dashboard');
                 break;
         }
     }

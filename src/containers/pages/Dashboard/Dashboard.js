@@ -4,9 +4,8 @@ import { withRouter } from 'react-router-dom';
 
 import './Dashboard.css';
 
-import { setModalVisibility } from '../../../actions'
-
-import { Sidebar , Main , Profilemodal} from '../components'
+import { setModalVisibility } from '../../../actions';
+import { Sidebar , Main , Profilemodal} from '../components';
 
 export class Dashboard extends Component {
 

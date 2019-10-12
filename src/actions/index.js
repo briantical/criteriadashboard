@@ -1,4 +1,13 @@
-import { SET_ACTIVE_USER , SET_TYPING_VALUE , SET_USER_TOKEN, SET_ERROR_MESSAGE, SET_USER_EMAIL, SET_MODAL_VISIBILITY} from "../constants/action-types";
+import {
+     SET_ACTIVE_USER,
+     SET_TYPING_VALUE, 
+     SET_USER_TOKEN, 
+     SET_ERROR_MESSAGE, 
+     SET_USER_EMAIL, 
+     SET_MODAL_VISIBILITY,
+     SET_PAGE_VISIBILITY
+
+    } from "../constants/action-types";
 
 export const setActiveUser = user => ({
     type: SET_ACTIVE_USER,
@@ -30,3 +39,7 @@ export const setModalVisibility = show => ({
     payload: show
 });
 
+export const setPageVisibility = (page,show) => ({
+    type: SET_PAGE_VISIBILITY,
+    payload: {page , show}
+});
