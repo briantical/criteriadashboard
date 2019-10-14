@@ -1,0 +1,6 @@
+.tiles{
+    border: 1px solid rgba(189, 189, 192, 1);
+    margin: 10px;
+    width: 20vw;
+    overflow: hidden;
+}

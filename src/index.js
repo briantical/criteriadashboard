@@ -7,4 +7,5 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import store from './store'
 
 ReactDOM.render(<App store={store}/>, document.getElementById('root'));
+console.log(store.getState())
 serviceWorker.register();

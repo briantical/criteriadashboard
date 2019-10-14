@@ -6,6 +6,7 @@ import errorMessage from './errorMessage';
 import token from './token';
 import showModal from './showModal';
 import showPage from './showPage';
+import cakes from './cakes';
 
 export default combineReducers({
     user,
@@ -13,5 +14,6 @@ export default combineReducers({
     errorMessage,
     token,
     showModal,
-    showPage
+    showPage,
+    cakes
 });

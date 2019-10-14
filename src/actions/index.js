@@ -5,7 +5,8 @@ import {
      SET_ERROR_MESSAGE, 
      SET_USER_EMAIL, 
      SET_MODAL_VISIBILITY,
-     SET_PAGE_VISIBILITY
+     SET_PAGE_VISIBILITY,
+     SET_AVAILABLE_CAKES
 
     } from "../constants/action-types";
 
@@ -42,4 +43,9 @@ export const setModalVisibility = show => ({
 export const setPageVisibility = (page,show) => ({
     type: SET_PAGE_VISIBILITY,
     payload: {page , show}
+});
+
+export const setAvailableCakes = cakes => ({
+    type: SET_AVAILABLE_CAKES,
+    payload: cakes
 });
