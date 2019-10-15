@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import axios from 'axios';
 import { secureStorage, pusher } from '../../../../../../utils';
-import { setErrorMessage, setAvailableCakes } from '../../../../../../actions';
+import { setErrorMessage, setAvailableCakes, addNewCake } from '../../../../../../actions';
 import Tiles from './Tiles/Tiles';
 
 import './Cakes.css';
@@ -11,9 +11,12 @@ import './Cakes.css';
 export class Cakes extends Component {
     componentDidMount(){
         this.channel = pusher.subscribe('cakes');
-        this.channel.bind('inserted', this.addCake);
+        this.channel.bind('inserted', this.insertCake);
         this.getCakes();
-        // console.log(secureStorage.getItem('token').token)
+    }
+
+    insertCake = (cake) =>{
+        this.props.addNewCake(cake.cake);
     }
 
     getCakes = () =>{
@@ -50,7 +53,7 @@ export class Cakes extends Component {
 
        let data = { 
             "category": "5d591e994c72e00249d8076a",
-            "name" : "Zhfucchinihfhnn",
+            "name" : "parte parter 21123",
             "description":"every moment matters",
             "image":"https://firebasestorage.googleapis.com/v0/b/criteria-66b60.appspot.com/o/images%2Fcake.jpg?alt=media&token=48429a2a-901e-4bfa-b52d-40c420a7dd19",
             "cakeDetails":
@@ -78,6 +81,7 @@ export class Cakes extends Component {
             options
         ).then((response) => {
             console.log(response)
+            //const { cake } = response.data;
             //const { cakes } = response.data;
             // this.props.setAvailableCakes(cakes);
             // // reset the error message  
@@ -112,7 +116,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     setErrorMessage,
-    setAvailableCakes
+    setAvailableCakes,
+    addNewCake
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cakes);

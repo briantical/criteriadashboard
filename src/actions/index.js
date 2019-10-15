@@ -6,7 +6,8 @@ import {
      SET_USER_EMAIL, 
      SET_MODAL_VISIBILITY,
      SET_PAGE_VISIBILITY,
-     SET_AVAILABLE_CAKES
+     SET_AVAILABLE_CAKES,
+     ADD_NEW_CAKE
 
     } from "../constants/action-types";
 
@@ -48,4 +49,9 @@ export const setPageVisibility = (page,show) => ({
 export const setAvailableCakes = cakes => ({
     type: SET_AVAILABLE_CAKES,
     payload: cakes
+});
+
+export const addNewCake = cake => ({
+    type: ADD_NEW_CAKE,
+    payload: cake
 });
