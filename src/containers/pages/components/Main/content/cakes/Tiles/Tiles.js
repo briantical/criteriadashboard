@@ -5,10 +5,11 @@ import './Tiles.css';
 
 export class Tiles extends Component {
     render() {
-        const {cake } = this.props;
-        const { cakeDetails, name, category, description, image } = cake;
+        const {cake , removeCake} = this.props;
+        const { cakeDetails, name, category, description, image, _id } = cake;
         return (
             <div className="tiles">
+                <div id={_id} className="removeCake" onClick={removeCake}>-</div>
                <p>{name}</p>
                <p>{category}</p>
                <p>{description}</p>

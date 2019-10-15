@@ -7,7 +7,8 @@ import {
      SET_MODAL_VISIBILITY,
      SET_PAGE_VISIBILITY,
      SET_AVAILABLE_CAKES,
-     ADD_NEW_CAKE
+     ADD_NEW_CAKE,
+     REMOVE_CAKE
 
     } from "../constants/action-types";
 
@@ -53,5 +54,10 @@ export const setAvailableCakes = cakes => ({
 
 export const addNewCake = cake => ({
     type: ADD_NEW_CAKE,
+    payload: cake
+});
+
+export const removeCake = cake => ({
+    type: REMOVE_CAKE,
     payload: cake
 });

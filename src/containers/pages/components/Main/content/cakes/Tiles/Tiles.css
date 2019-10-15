@@ -3,4 +3,19 @@
     margin: 10px;
     width: 20vw;
     overflow: hidden;
+    position: relative;
+}
+
+.removeCake{
+    height:20px; 
+    width:20px; 
+    border-radius:20px; 
+    border: 2px solid tomato;
+    position: absolute;
+    display: flex;  
+    justify-content: center; 
+    align-items: center;
+    color: tomato;
+    right: 4px;
+    top: 4px;
 }
