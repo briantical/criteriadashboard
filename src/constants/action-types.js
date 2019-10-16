@@ -9,3 +9,4 @@ export const SET_PAGE_VISIBILITY = "SET_PAGE_VISIBILITY";
 export const SET_AVAILABLE_CAKES = "SET_AVAILABLE_CAKES";
 export const ADD_NEW_CAKE = "ADD_NEW_CAKE";
 export const REMOVE_CAKE = "REMOVE_CAKE";
+export const EDIT_CAKE = "EDIT_CAKE";

@@ -5,7 +5,7 @@ import './Tiles.css';
 
 export class Tiles extends Component {
     render() {
-        const {cake , removeCake} = this.props;
+        const {cake , removeCake, editCake} = this.props;
         const { cakeDetails, name, category, description, image, _id } = cake;
         return (
             <div className="tiles">
@@ -15,6 +15,7 @@ export class Tiles extends Component {
                <p>{description}</p>
                <p>{image}</p>
                <p>{JSON.stringify(cakeDetails)}</p>
+               <div className="editCake" onClick={editCake}>/</div>
             </div>
         )
     }

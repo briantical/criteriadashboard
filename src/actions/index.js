@@ -8,7 +8,8 @@ import {
      SET_PAGE_VISIBILITY,
      SET_AVAILABLE_CAKES,
      ADD_NEW_CAKE,
-     REMOVE_CAKE
+     REMOVE_CAKE,
+     EDIT_CAKE
 
     } from "../constants/action-types";
 
@@ -59,5 +60,10 @@ export const addNewCake = cake => ({
 
 export const removeCake = cake => ({
     type: REMOVE_CAKE,
+    payload: cake
+});
+
+export const editCake = cake => ({
+    type: EDIT_CAKE,
     payload: cake
 });

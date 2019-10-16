@@ -19,3 +19,17 @@
     right: 4px;
     top: 4px;
 }
+
+.editCake{
+    height:20px; 
+    width:20px; 
+    border-radius:20px; 
+    border: 2px solid turquoise;
+    position: absolute;
+    display: flex;  
+    justify-content: center; 
+    align-items: center;
+    color: turquoise;
+    right: 4px;
+    bottom: 4px;
+}
