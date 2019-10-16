@@ -3,6 +3,8 @@
     flex-wrap: wrap;
     justify-content: center;
     position: relative;
+    overflow: auto;
+    height: 100%;
 }
 
 .addCake{
@@ -13,4 +15,8 @@
     display: flex;  
     justify-content: center; 
     align-items: center;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1;
 }

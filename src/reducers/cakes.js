@@ -9,9 +9,7 @@ const cakes = (state = [] , action) =>{
             return [ action.payload , ...state];
 
         case REMOVE_CAKE:
-            //console.log(state.filter(cake => cake._id !== action.payload._id))
-            console.log('ghjk' + action.payload)
-            return state.filter(cake => cake._id !== action.payload._id);
+            return state.filter(cake => cake._id !== action.payload);
 
         default:
             return state;

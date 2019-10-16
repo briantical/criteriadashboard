@@ -106,8 +106,7 @@ export class Cakes extends Component {
             {headers},
             options
         ).then((response) => {
-            console.log(response)
-
+            
             // reset the error message  
             let errorMessage = {message: "", show: false};
             this.props.setErrorMessage(errorMessage);
@@ -122,14 +121,12 @@ export class Cakes extends Component {
 
     render() {
         const { cakes } = this.props;
-        console.log(cakes)
+        //console.log(JSON.stringify(cakes))
         return (
-            <div>
-                <div className="cakes">
-                    { cakes.map((cake) => <Tiles cake={cake} key={cake._id} removeCake={this.removeCake}/>)}
-                </div>
+            <div className="cakes">
+                { cakes.map((cake) => <Tiles cake={cake} key={cake._id} removeCake={this.removeCake}/>)}
                 <div className="addCake" onClick={this.addCake}>+</div>
-            </div> 
+            </div>  
         )
     }
 }
