@@ -119,56 +119,56 @@ export class Cakes extends Component {
         });
     }
 
-    editCake = (event) =>{
-        const form = event.target;
-        const formdata = new FormData(form);
+    editCake = () =>{
+        console.log('Editing')
+        // const form = event.target;
+        // const formdata = new FormData(form);
     
-        let name = formdata.get('cakename');
-        let category = formdata.get('category');
-        let description = formdata.get('cakedescription');;    
-        let image = formdata.get('cakeimage');
-        let cakeDetails = formdata.get('cakedetails');
+        // let name = formdata.get('cakename');
+        // let category = formdata.get('category');
+        // let description = formdata.get('cakedescription');;    
+        // let image = formdata.get('cakeimage');
+        // let cakeDetails = formdata.get('cakedetails');
 
-        let data = {
-            category,
-            name,
-            description,
-            image,
-            cakeDetails
-        };
+        // let data = {
+        //     category,
+        //     name,
+        //     description,
+        //     image,
+        //     cakeDetails
+        // };
         
 
-        let options = {
-            responseType: "json",
-        }
+        // let options = {
+        //     responseType: "json",
+        // }
 
-        let headers = {
-            'Authorization': 'Bearer ' + secureStorage.getItem('token').token
-        }
+        // let headers = {
+        //     'Authorization': 'Bearer ' + secureStorage.getItem('token').token
+        // }
 
-        axios.put(
-            `http://localhost:3000/api/v1/cake/${event.target.id}`,
-            data,
-            {headers},
-            options
-        ).then(() => {
-            console.log('Successfully added')
+        // axios.put(
+        //     `http://localhost:3000/api/v1/cake/${event.target.id}`,
+        //     data,
+        //     {headers},
+        //     options
+        // ).then(() => {
+        //     console.log('Successfully added')
 
-            // reset the error message  
-            let errorMessage = {message: "", show: false};
-            this.props.setErrorMessage(errorMessage);
-        }).catch((error) => {
-            console.log(error)
-            let message = error.response.data.message;
-            let show = true;
-            let theError = {message,show}
-            this.props.setErrorMessage(theError);
-        });
+        //     // reset the error message  
+        //     let errorMessage = {message: "", show: false};
+        //     this.props.setErrorMessage(errorMessage);
+        // }).catch((error) => {
+        //     console.log(error)
+        //     let message = error.response.data.message;
+        //     let show = true;
+        //     let theError = {message,show}
+        //     this.props.setErrorMessage(theError);
+        // });
     }
 
     render() {
         const { cakes } = this.props;
-        console.log(JSON.stringify(cakes))
         return (
             <div className="cakes">
                 { cakes.map((cake) => <Tiles cake={cake} key={cake._id} removeCake={this.removeCake} editCake={this.editCake}/>)}

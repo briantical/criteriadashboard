@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 import './Main.css';
 import {Cakes, Snacks, Orders, Wallet, Staff} from './content/'
+import { Editcakemodal } from '../Modals';
 
 export class Main extends Component {
 
@@ -29,7 +30,7 @@ export class Main extends Component {
     }
 
     render() {
-        const { showPage } =this.props;
+        const { showPage, showModal } =this.props;
         return (
             <main className='main'>
                 {
@@ -41,8 +42,8 @@ export class Main extends Component {
 }
 
 const mapStateToProps = (state) => {
-    const { user , showPage} = state;
-    return { user, showPage };  
+    const { user , showPage, showModal} = state;
+    return { user, showPage, showModal};  
 };
 
 const mapDispatchToProps = {
