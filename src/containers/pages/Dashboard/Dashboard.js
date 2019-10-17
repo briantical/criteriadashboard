@@ -12,14 +12,23 @@ export class Dashboard extends Component {
     closeModal =()=>{
         this.props.setModalVisibility(false);
     }
+    chooseModal = (modal) =>{
+        switch (modal) {
+            case 'profilemodal':
+                return <Profilemodal hideModal={()=>this.closeModal()}/>
+        
+            default:
+                break;
+        }
+    }
 
     render() {
-        const { showModal } = this.props;
+        const { showModal:{show, modal,modalprops} } = this.props;
         return (
             <div className='dashboard'>
                 <Sidebar/>
                 <Main/>
-                { showModal ? <Profilemodal hideModal={()=>this.closeModal()}/> : null}
+                { show ? this.chooseModal(modal) : null}
             </div>
         )
     }

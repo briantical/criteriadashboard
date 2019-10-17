@@ -9,8 +9,8 @@ let avatar = require('../../../../../assets/avatar.png');
 
 export class Siderbarnav extends Component {
 
-    openModal = () =>{
-        this.props.setModalVisibility(true);
+    openModal = (modal) =>{
+        this.props.setModalVisibility(true, modal, null);
     }
 
     closeModal = () =>{
@@ -37,9 +37,9 @@ export class Siderbarnav extends Component {
                 break;
 
             //Show the user profile
-            case 'profile':
+            case 'profilemodal':
                 
-                this.openModal();
+                this.openModal(event.target.id);
                 break;
             
             //Redirect to Dashboard if all fails
@@ -59,7 +59,7 @@ export class Siderbarnav extends Component {
                 <div onClick={this.handleOnClick} id='home'>HOME</div>
                 <div onClick={this.handleOnClick} id='search'>SEARCH</div>
                 <div onClick={this.handleOnClick} id='help'>HELP</div>
-                <div onClick={this.handleOnClick} id='profile' style={{backgroundImage:`url(${avatar})`}}/>
+                <div onClick={this.handleOnClick} id='profilemodal' style={{backgroundImage:`url(${avatar})`}}/>
             </section>
         )
     }

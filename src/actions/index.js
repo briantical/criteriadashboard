@@ -38,9 +38,9 @@ export const setUserToken = token => ({
     payload: token
 });
 
-export const setModalVisibility = show => ({
+export const setModalVisibility = (show,modal,modalprops) => ({
     type: SET_MODAL_VISIBILITY,
-    payload: show
+    payload: {show, modal,modalprops}
 });
 
 export const setPageVisibility = (page,show) => ({
