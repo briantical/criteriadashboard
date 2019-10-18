@@ -2,21 +2,20 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { setModalVisibility} from '../../../../../../../actions/';
-import { Editcakemodal } from '../../../../Modals/'
 
 import './Tiles.css';
 
 export class Tiles extends Component {
     handleOnClick = () =>{
-        this.props.editCake();
-        this.setModalVisibility(true);
-        return <Editcakemodal/>
+        let modalprops = this.props;
+        console.log(modalprops)
+        this.props.setModalVisibility(true,'editcakemodal', modalprops);
     }
 
     render() {
-        const {cake , removeCake, editCake, showModal} = this.props;
+        const {cake , removeCake } = this.props;
+        
         const { cakeDetails, name, category, description, image, _id } = cake;
-        console.log(this.props)
         return (
             <div className="tiles">
                 <div id={_id} className="removeCake" onClick={removeCake}>-</div>
@@ -25,7 +24,7 @@ export class Tiles extends Component {
                <p>{description}</p>
                <p>{image}</p>
                <p>{JSON.stringify(cakeDetails)}</p>
-               <div className="editCake" onClick={editCake}>/</div>
+               <div className="editCake" onClick={this.handleOnClick}>/</div>
             </div>
             
         )

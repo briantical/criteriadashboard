@@ -5,17 +5,22 @@ import { withRouter } from 'react-router-dom';
 import './Dashboard.css';
 
 import { setModalVisibility } from '../../../actions';
-import { Sidebar , Main , Profilemodal} from '../components';
+import { Sidebar , Main , Profilemodal, Editcakemodal} from '../components';
+import { profilemodal, editcakemodal} from '../../../constants/modals';
 
 export class Dashboard extends Component {
 
     closeModal =()=>{
         this.props.setModalVisibility(false);
     }
-    chooseModal = (modal) =>{
+    
+    chooseModal = (modal, modalprops) =>{
         switch (modal) {
-            case 'profilemodal':
-                return <Profilemodal hideModal={()=>this.closeModal()}/>
+            case profilemodal:
+                return <Profilemodal hideModal={()=>this.closeModal()} modalprops={modalprops}/>
+
+            case editcakemodal:
+                return <Editcakemodal hideModal={()=>this.closeModal()} modalprops={modalprops}/>
         
             default:
                 break;
@@ -28,7 +33,7 @@ export class Dashboard extends Component {
             <div className='dashboard'>
                 <Sidebar/>
                 <Main/>
-                { show ? this.chooseModal(modal) : null}
+                { show ? this.chooseModal(modal, modalprops) : null}
             </div>
         )
     }

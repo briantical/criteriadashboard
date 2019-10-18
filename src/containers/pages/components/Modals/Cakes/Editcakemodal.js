@@ -1,18 +1,26 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import './Editcakemodal.css';
 
-const cake = require('../../../../../assets/cake.png');
-const Editcakemodal = (props) => {
-
-    let updateCake = ()=>{
-        props.editCake();
+export class Editcakemodal extends Component {
+    render() {
+        const {showModal:{modalprops}} =this.props;
+        return (
+            <div className="editcakemodal">
+                <div>{JSON.stringify(modalprops)}</div>
+            </div>
+        )
     }
-
-    return (
-        <div>
-            <p>EDIT MODAL</p>
-        </div>
-    )
 }
 
-export default Editcakemodal;
+const mapStateToProps = (state) => {
+    const { showModal } = state;
+    return { showModal }
+};
+
+const mapDispatchToProps = {
+    
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Editcakemodal)
