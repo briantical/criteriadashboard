@@ -6,16 +6,16 @@ import { setModalVisibility} from '../../../../../../../actions/';
 import './Tiles.css';
 
 export class Tiles extends Component {
+    
     handleOnClick = () =>{
         let modalprops = this.props;
-        console.log(modalprops)
         this.props.setModalVisibility(true,'editcakemodal', modalprops);
     }
 
     render() {
         const {cake , removeCake } = this.props;
-        
         const { cakeDetails, name, category, description, image, _id } = cake;
+
         return (
             <div className="tiles">
                 <div id={_id} className="removeCake" onClick={removeCake}>-</div>

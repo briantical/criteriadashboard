@@ -10,17 +10,17 @@ import { profilemodal, editcakemodal} from '../../../constants/modals';
 
 export class Dashboard extends Component {
 
-    closeModal =()=>{
-        this.props.setModalVisibility(false);
+    closeModal =(modal)=>{
+        this.props.setModalVisibility(false,modal,null);
     }
     
     chooseModal = (modal, modalprops) =>{
         switch (modal) {
             case profilemodal:
-                return <Profilemodal hideModal={()=>this.closeModal()} modalprops={modalprops}/>
+                return <Profilemodal hideModal={()=>this.closeModal(profilemodal)} modalprops={modalprops}/>
 
             case editcakemodal:
-                return <Editcakemodal hideModal={()=>this.closeModal()} modalprops={modalprops}/>
+                return <Editcakemodal hideModal={()=>this.closeModal(editcakemodal)} modalprops={modalprops}/>
         
             default:
                 break;
