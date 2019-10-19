@@ -167,14 +167,14 @@ export class Profile extends Component {
                     <table>
                         <tbody>
                             <tr>
-                                <td id="imageholder">
+                                <td>
                                     <div  id="imageholder">
                                         <img id="profile" name="profile" src={avatar} className="theImage" alt="profilepic"/>
                                         <input type="file"  accept="image/*" onChange={this.handleImageUploadChange} id="select_image" required/>
                                     </div>
                                 </td>
                                 <td>NAME:</td>
-                                <td><input name="fullname" id="fullname" autoComplete="off" required/> </td>
+                                <td><input name="fullname" id="fullname" autoComplete="off" required/></td>
                             </tr>
                             <tr>
                                 <td>USERNAME</td>
@@ -197,7 +197,6 @@ export class Profile extends Component {
                     <button>COMPLETE</button>
                 </form>
                 {this.props.errorMessage.message}
-            
             </div>
         )
     }

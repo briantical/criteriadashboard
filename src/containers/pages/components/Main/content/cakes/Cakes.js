@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import axios from 'axios';
 import { secureStorage, pusher } from '../../../../../../utils';
-import { setErrorMessage, setAvailableCakes, addNewCake, removeCake} from '../../../../../../actions';
+import { setErrorMessage, setAvailableCakes, addNewCake, removeCake, updateCake} from '../../../../../../actions';
 import Tiles from './Tiles/Tiles';
 
 import './Cakes.css';
@@ -13,6 +13,7 @@ export class Cakes extends Component {
         this.channel = pusher.subscribe('cakes');
         this.channel.bind('inserted', this.insertCake);
         this.channel.bind('deleted', this.deleteCake);
+        this.channel.bind('updated', this.updateCake);
         this.getCakes();
     }
 
@@ -22,6 +23,10 @@ export class Cakes extends Component {
 
     deleteCake = (cake) =>{
         this.props.removeCake(cake);
+    }
+
+    updateCake = (cake) =>{
+        this.props.updateCake(cake);
     }
 
 
@@ -119,52 +124,33 @@ export class Cakes extends Component {
         });
     }
 
-    editCake = () =>{
-        console.log('Editing')
-        // const form = event.target;
-        // const formdata = new FormData(form);
-    
-        // let name = formdata.get('cakename');
-        // let category = formdata.get('category');
-        // let description = formdata.get('cakedescription');;    
-        // let image = formdata.get('cakeimage');
-        // let cakeDetails = formdata.get('cakedetails');
+    editCake = (_id, data) =>{      
+        let options = {
+            responseType: "json",
+        }
 
-        // let data = {
-        //     category,
-        //     name,
-        //     description,
-        //     image,
-        //     cakeDetails
-        // };
-        
+        let headers = {
+            'Authorization': 'Bearer ' + secureStorage.getItem('token').token
+        }
 
-        // let options = {
-        //     responseType: "json",
-        // }
+        axios.put(
+            `http://localhost:3000/api/v1/cake/${_id}`,
+            data,
+            {headers},
+            options
+        ).then(() => {
+            console.log('Successfully added')
 
-        // let headers = {
-        //     'Authorization': 'Bearer ' + secureStorage.getItem('token').token
-        // }
-
-        // axios.put(
-        //     `http://localhost:3000/api/v1/cake/${event.target.id}`,
-        //     data,
-        //     {headers},
-        //     options
-        // ).then(() => {
-        //     console.log('Successfully added')
-
-        //     // reset the error message  
-        //     let errorMessage = {message: "", show: false};
-        //     this.props.setErrorMessage(errorMessage);
-        // }).catch((error) => {
-        //     console.log(error)
-        //     let message = error.response.data.message;
-        //     let show = true;
-        //     let theError = {message,show}
-        //     this.props.setErrorMessage(theError);
-        // });
+            // reset the error message  
+            let errorMessage = {message: "", show: false};
+            this.props.setErrorMessage(errorMessage);
+        }).catch((error) => {
+            console.log(error)
+            let message = error.response.data.message;
+            let show = true;
+            let theError = {message,show}
+            this.props.setErrorMessage(theError);
+        });
     }
 
     render() {
@@ -187,7 +173,8 @@ const mapDispatchToProps = {
     setErrorMessage,
     setAvailableCakes,
     addNewCake,
-    removeCake
+    removeCake,
+    updateCake
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cakes);

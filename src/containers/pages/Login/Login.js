@@ -37,7 +37,7 @@ export class Login extends Component {
       complete ? history.push('/dashboard') : history.push({pathname:'/profile',search:email});
     })
     .catch((error) => {
-      let theError = {message:error ,show:true}
+      let theError = {message:error.message ,show:true}
       this.props.setErrorMessage(theError);
     });
   }
@@ -87,7 +87,7 @@ export class Login extends Component {
         </table>
         <button>LOGIN</button>
         </form>
-        
+        {this.props.errorMessage.show ? this.props.errorMessage.message : null}
         <Link to="/register" >SIGN UP</Link>
       </div>
     )
