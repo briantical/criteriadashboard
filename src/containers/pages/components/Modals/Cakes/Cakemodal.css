@@ -1,4 +1,4 @@
-.editcakemodal{
+.cakemodal {
     width: 100vw;
     height: 100vh;
     position: absolute;
@@ -9,7 +9,7 @@
     background-color: rgba(189, 189, 192, 0.5);
 }
 
-.editmodaltable{
+.modaltable {
     background-color: white;
     width: 40%;
     height: 60%;

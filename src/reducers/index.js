@@ -7,6 +7,7 @@ import token from './token';
 import showModal from './showModal';
 import showPage from './showPage';
 import cakes from './cakes';
+import categories from './categories';
 
 export default combineReducers({
     user,
@@ -15,5 +16,6 @@ export default combineReducers({
     token,
     showModal,
     showPage,
-    cakes
+    cakes,
+    categories
 });

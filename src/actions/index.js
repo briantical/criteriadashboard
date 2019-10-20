@@ -10,7 +10,8 @@ import {
      ADD_NEW_CAKE,
      REMOVE_CAKE,
      EDIT_CAKE,
-     UPDATE_CAKE
+     UPDATE_CAKE,
+     SET_CAKE_CATEGORIES
      
     } from "../constants/action-types";
 
@@ -72,4 +73,9 @@ export const editCake = cake => ({
 export const updateCake = cake => ({
     type: UPDATE_CAKE,
     payload: cake
+});
+
+export const setCakeCategories = category => ({
+    type: SET_CAKE_CATEGORIES,
+    payload: category
 });
