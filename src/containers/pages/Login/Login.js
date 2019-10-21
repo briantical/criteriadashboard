@@ -30,6 +30,8 @@ export class Login extends Component {
       setActiveUser(user);
       setUserToken(token);
       secureStorage.setItem('token', {token});
+      secureStorage.setItem('user', {user});
+      secureStorage.setItem('email', {email});
       setUserEmail(email);
 
       let errorMessage = {message: "", show: false};

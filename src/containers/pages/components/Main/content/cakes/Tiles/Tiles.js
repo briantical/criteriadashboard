@@ -15,7 +15,6 @@ export class Tiles extends Component {
     render() {
         const {cake , removeCake } = this.props;
         const { cakeDetails, name, category, description, image, _id } = cake;
-        
         return (
             <div className="tiles">
                 <div id={_id} className="removeCake" onClick={removeCake}>-</div>

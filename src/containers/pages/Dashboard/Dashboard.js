@@ -4,11 +4,19 @@ import { withRouter } from 'react-router-dom';
 
 import './Dashboard.css';
 
-import { setModalVisibility } from '../../../actions';
+import { setModalVisibility ,setActiveUser,setUserEmail } from '../../../actions';
 import { Sidebar , Main , Profilemodal, Editcakemodal, Addcakemodal} from '../components';
 import { profilemodal, editcakemodal, addcakemodal} from '../../../constants/modals';
+import { secureStorage } from '../../../utils'
 
 export class Dashboard extends Component {
+
+    componentDidMount = ()=>{
+        let { user, setActiveUser } = this.props;
+        user = user == null ? secureStorage.getItem('user').user : user;
+        setActiveUser(user);
+        setUserEmail(secureStorage.getItem('email').email);
+    }
 
     closeModal =(modal)=>{
         this.props.setModalVisibility(false,modal,null);
@@ -32,6 +40,7 @@ export class Dashboard extends Component {
 
     render() {
         const { showModal:{show, modal,modalprops} } = this.props;
+    
         return (
             <div className='dashboard'>
                 <Sidebar/>
@@ -48,7 +57,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-    setModalVisibility
+    setModalVisibility,
+    setActiveUser,
+    setUserEmail
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Dashboard));

@@ -18,11 +18,13 @@ const cakes = (state = [] , action) =>{
             };
 
         case UPDATE_CAKE:
-            //console.log(action.payload)
-            return {
-                ...state,
-                cake : state.map((cake) => cake._id === action.payload)
-            }
+            let newCake = action.payload
+            return state.map((cake)=>{
+                if(cake._id === newCake._id){
+                    cake = newCake
+                }
+                return cake;
+            })
 
         default:
             return state;

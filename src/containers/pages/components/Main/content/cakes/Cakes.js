@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import axios from 'axios';
 import { secureStorage, pusher } from '../../../../../../utils';
-import { setErrorMessage, setAvailableCakes, addNewCake, removeCake, updateCake, setCakeCategories, setModalVisibility} from '../../../../../../actions';
+import { setErrorMessage, setAvailableCakes, addNewCake, removeCake, updateCake ,setCakeCategories, setModalVisibility} from '../../../../../../actions';
 import Tiles from './Tiles/Tiles';
 
 import {addcakemodal} from '../../../../../../constants/modals'
@@ -11,15 +11,17 @@ import {addcakemodal} from '../../../../../../constants/modals'
 import './Cakes.css';
 
 export class Cakes extends Component {
+
+    UNSAFE_componentWillMount(){
+        this.getCakes();
+        this.getCategories();
+    }
+
     componentDidMount(){
         this.channel = pusher.subscribe('cakes');
         this.channel.bind('inserted', this.insertCake);
         this.channel.bind('deleted', this.deleteCake);
         this.channel.bind('updated', this.updateCake);
-        this.getCakes();
-        this.getCategories();
-
-        console.log(secureStorage.getItem('token').token)
     }
 
     insertCake = (cake) =>{

@@ -101,7 +101,7 @@ export class Editcakemodal extends Component {
     render() {
         const {categories,hideModal,modalprops:{cake:{name,description,category,image,cakeDetails:{shape,tiers,weight,flavour,cost}}}} =this.props;
         const { errorMessage } =this.props;
-
+        
         return (
             <div className="cakemodal" onClick={hideModal}>
                 <div className="modaltable" onClick={this.handleOnClick}>
