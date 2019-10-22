@@ -2,13 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import axios from 'axios';
-import { secureStorage, pusher } from '../../../../../../utils';
+import { secureStorage, pusher, firebase } from '../../../../../../utils';
 import { setErrorMessage, setAvailableCakes, addNewCake, removeCake, updateCake ,setCakeCategories, setModalVisibility} from '../../../../../../actions';
 import Tiles from './Tiles/Tiles';
 
 import {addcakemodal} from '../../../../../../constants/modals'
 
 import './Cakes.css';
+
+const storageService = firebase.storage();
 
 export class Cakes extends Component {
 
@@ -122,7 +124,19 @@ export class Cakes extends Component {
             {headers},
             options
         ).then((response) => {
-            
+            const { cake } = response.data;
+            const {image } = cake;
+
+            storageService.refFromURL(image)
+                .delete()
+                .then(function() {
+                    // File deleted successfully
+                    console.log('Sucessfully deleted image')
+                }).catch(function(error) {
+                    // Uh-oh, an error occurred!
+                    console.log('an error occured' + error)
+                });
+
             // reset the error message  
             let errorMessage = {message: "", show: false};
             this.props.setErrorMessage(errorMessage);
