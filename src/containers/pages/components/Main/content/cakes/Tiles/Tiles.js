@@ -13,13 +13,17 @@ export class Tiles extends Component {
     }
 
     render() {
-        const {cake , removeCake } = this.props;
-        const { cakeDetails, name, category, description, image, _id } = cake;
+        const {cake , removeCake, categories } = this.props;
+        let { cakeDetails, name, category, description, image, _id } = cake;
+        
         return (
             <div className="tiles">
                 <div id={_id} className="removeCake" onClick={removeCake}>-</div>
                <p>{name}</p>
-               <p>{category.name}</p>
+               <p>{
+                    typeof(category) !== 'object' ? categories.find((newcategory)=> newcategory._id === category).name : category.name
+                   }
+                </p>
                <p>{description}</p>
                <p>{image}</p>
                <p>{JSON.stringify(cakeDetails)}</p>
@@ -31,12 +35,12 @@ export class Tiles extends Component {
 }
 
 const mapStateToProps = (state) => {
-    const { showModal } = state;
-    return { showModal}
+    const { showModal, categories } = state;
+    return { showModal, categories}
 }
 
 const mapDispatchToProps = {
     setModalVisibility
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Tiles)
+export default connect(mapStateToProps, mapDispatchToProps)(Tiles);

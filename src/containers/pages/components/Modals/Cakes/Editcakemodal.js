@@ -128,7 +128,10 @@ export class Editcakemodal extends Component {
                                     <td>CATEGORY:</td>
                                     <td>
                                         <select id="category" name="category" autoComplete="off">
-                                            <option value={category._id}>{category.name}</option>
+                                            <option
+                                             value={typeof(category) === 'object' ? category._id : category}>
+                                             {typeof(category) !== 'object' ? categories.find((newcategory)=> newcategory._id === category).name : category.name}
+                                            </option>
                                             {
                                                 categories.map((category)=><option value={category._id} key={category._id}>{category.name}</option>)
                                             }
