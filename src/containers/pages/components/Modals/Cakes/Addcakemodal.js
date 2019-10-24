@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { setErrorMessage } from '../../../../../actions';
+import SpringSpinner from '@bit/bondz.react-epic-spinners.spring-spinner';
+import { setErrorMessage, showLoadingSpinner } from '../../../../../actions';
 import { firebase } from '../../../../../utils';
 
 import './Cakemodal.css';
@@ -32,6 +33,7 @@ export class Addcakemodal extends Component {
             // Observe state change events such as progress, pause, and resume
             // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
             var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            (progress !== 100) ? this.props.showLoadingSpinner(true) : this.props.showLoadingSpinner(false)
             console.log('Upload is ' + progress + '% done');
             switch (snapshot.state) {
                 case firebase.storage.TaskState.PAUSED: // or 'paused'
@@ -83,6 +85,8 @@ export class Addcakemodal extends Component {
         }
         const form = event.target;
         const data = new FormData(form);
+
+        this.props.showLoadingSpinner(true)
     
         let name = data.get('name');
         let category = data.get('category');
@@ -101,7 +105,7 @@ export class Addcakemodal extends Component {
     };
 
     render() {
-        const {categories,hideModal,errorMessage} =this.props;
+        const {categories,hideModal,errorMessage, spinner} =this.props;
         return (
             <div className="addcakemodal" onClick={hideModal}>
                 <div className="modaltable" onClick={this.handleOnClick}>
@@ -160,7 +164,7 @@ export class Addcakemodal extends Component {
                                 </tr>
                             </tbody>
                         </table>
-                        <button>COMPLETE</button>
+                        {spinner ? <SpringSpinner color='#000000' size={parseInt('20')}/> : <button>COMPLETE</button>}
                     </form>
                 </div>
             </div>
@@ -169,12 +173,13 @@ export class Addcakemodal extends Component {
 }
 
 const mapStateToProps = (state) => {
-    const { errorMessage, categories } = state;
-    return { errorMessage, categories }; 
+    const { errorMessage, categories, spinner } = state;
+    return { errorMessage, categories, spinner }; 
 }
 
 const mapDispatchToProps = {
-    setErrorMessage
+    setErrorMessage, 
+    showLoadingSpinner
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Addcakemodal)

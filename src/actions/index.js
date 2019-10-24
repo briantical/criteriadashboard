@@ -11,7 +11,8 @@ import {
      REMOVE_CAKE,
      EDIT_CAKE,
      UPDATE_CAKE,
-     SET_CAKE_CATEGORIES
+     SET_CAKE_CATEGORIES,
+     SHOW_LOADING_SPINNER
      
     } from "../constants/action-types";
 
@@ -78,4 +79,9 @@ export const updateCake = cake => ({
 export const setCakeCategories = category => ({
     type: SET_CAKE_CATEGORIES,
     payload: category
+});
+
+export const showLoadingSpinner = show => ({
+    type: SHOW_LOADING_SPINNER,
+    payload: show
 });

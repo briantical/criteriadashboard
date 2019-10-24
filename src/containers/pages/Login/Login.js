@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { withRouter , Link } from 'react-router-dom';
+import SpringSpinner from '@bit/bondz.react-epic-spinners.spring-spinner';
 
 import './Login.css';
-import { setActiveUser, setErrorMessage, setUserToken, setUserEmail }  from '../../../actions';
+import { setActiveUser, setErrorMessage, setUserToken, setUserEmail, showLoadingSpinner }  from '../../../actions';
 import { secureStorage } from '../../../utils';
 
 export class Login extends Component {
@@ -38,6 +39,8 @@ export class Login extends Component {
       secureStorage.setItem('email', {email});
       setUserEmail(email);
 
+      this.props.showLoadingSpinner(false);
+
       let errorMessage = {message: "", show: false};
       setErrorMessage(errorMessage);
       complete ? history.push('/dashboard') : history.push({pathname:'/profile',search:email});
@@ -45,6 +48,7 @@ export class Login extends Component {
     .catch((error) => {
       let theError = {message:error.message ,show:true}
       this.props.setErrorMessage(theError);
+      this.props.showLoadingSpinner(true);
     });
   }
 
@@ -54,6 +58,8 @@ export class Login extends Component {
       this.props.setErrorMessage({message:'',show:true});
       return;
     }
+    this.props.showLoadingSpinner(true);
+
     const form = event.target;
     const data = new FormData(form);
 
@@ -64,7 +70,7 @@ export class Login extends Component {
   }
 
   render() {
-    const { errorMessage } = this.props;
+    const { errorMessage, spinner } = this.props;
     return (
       <div className='login'>
         <form 
@@ -91,25 +97,27 @@ export class Login extends Component {
             </tr>
             </tbody>
         </table>
-        <button>LOGIN</button>
+        {spinner ? <SpringSpinner color='#000000' size={parseInt('20')}/> : <button>LOGIN</button>}
         </form>
         {this.props.errorMessage.show ? this.props.errorMessage.message : null}
         <Link to="/register" >SIGN UP</Link>
+        
       </div>
     )
   }
 }
 
 const mapStateToProps = (state) => {
-  const { errorMessage, user } = state;
-  return { errorMessage, user };
+  const { errorMessage, user ,spinner } = state;
+  return { errorMessage, user, spinner };
 }
 
 const mapDispatchToProps = {
   setActiveUser,
   setUserToken,
   setErrorMessage,
-  setUserEmail 
+  setUserEmail,
+  showLoadingSpinner 
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));

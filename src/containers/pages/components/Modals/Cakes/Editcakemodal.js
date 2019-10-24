@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import SpringSpinner from '@bit/bondz.react-epic-spinners.spring-spinner';
 
 import { firebase } from '../../../../../utils';
-import { setErrorMessage } from '../../../../../actions'
+import { setErrorMessage, showLoadingSpinner } from '../../../../../actions'
 import './Cakemodal.css';
+
 
 const storageService = firebase.storage();
 const storageRef = storageService.ref();
@@ -28,6 +30,7 @@ export class Editcakemodal extends Component {
             // Observe state change events such as progress, pause, and resume
             // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
             var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            (progress !== 100) ? this.props.showLoadingSpinner(true) : this.props.showLoadingSpinner(false);
             console.log('Upload is ' + progress + '% done');
             switch (snapshot.state) {
                 case firebase.storage.TaskState.PAUSED: // or 'paused'
@@ -77,6 +80,9 @@ export class Editcakemodal extends Component {
           this.props.setErrorMessage({message,show});
           return;
         }
+
+        this.props.showLoadingSpinner(true);
+
         const form = event.target;
         const data = new FormData(form);
 
@@ -100,7 +106,7 @@ export class Editcakemodal extends Component {
 
     render() {
         const {categories,hideModal,modalprops:{cake:{name,description,category,image,cakeDetails:{shape,tiers,weight,flavour,cost}}}} =this.props;
-        const { errorMessage } =this.props;
+        const { errorMessage, spinner } =this.props;
         
         return (
             <div className="editcakemodal" onClick={hideModal}>
@@ -164,7 +170,7 @@ export class Editcakemodal extends Component {
                                 </tr>
                             </tbody>
                         </table>
-                        <button>COMPLETE</button>
+                        {spinner ? <SpringSpinner color='#000000' size={parseInt('20')}/> : <button>COMPLETE</button>}
                     </form>
                 </div>
             </div>
@@ -173,12 +179,12 @@ export class Editcakemodal extends Component {
 }
 
 const mapStateToProps = (state) => {
-    const { errorMessage, categories } = state;
-    return { errorMessage, categories };
+    const { errorMessage, categories ,spinner} = state;
+    return { errorMessage, categories , spinner};
 };
 
 const mapDispatchToProps = {
-    setErrorMessage
+    setErrorMessage, showLoadingSpinner
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editcakemodal)

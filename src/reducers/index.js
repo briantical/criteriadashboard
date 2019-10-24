@@ -8,6 +8,7 @@ import showModal from './showModal';
 import showPage from './showPage';
 import cakes from './cakes';
 import categories from './categories';
+import spinner from './spinner';
 
 export default combineReducers({
     user,
@@ -17,5 +18,6 @@ export default combineReducers({
     showModal,
     showPage,
     cakes,
-    categories
+    categories,
+    spinner
 });

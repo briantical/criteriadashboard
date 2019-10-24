@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 import axios from 'axios';
 import { secureStorage, pusher, firebase } from '../../../../../../utils';
-import { setErrorMessage, setAvailableCakes, addNewCake, removeCake, updateCake ,setCakeCategories, setModalVisibility} from '../../../../../../actions';
+import { setErrorMessage, setAvailableCakes, addNewCake, removeCake, updateCake ,setCakeCategories, setModalVisibility, showLoadingSpinner} from '../../../../../../actions';
 import Tiles from './Tiles/Tiles';
 
 import {addcakemodal} from '../../../../../../constants/modals'
@@ -101,12 +101,14 @@ export class Cakes extends Component {
             // reset the error message  
             let errorMessage = {message: "", show: false};
             this.props.setErrorMessage(errorMessage);
+            this.props.showLoadingSpinner(false);
         }).catch((error) => {
             console.log(error)
             let message = error.response.data.message;
             let show = true;
             let theError = {message,show}
             this.props.setErrorMessage(theError);
+            this.props.showLoadingSpinner(false);
         });
     }
 
@@ -169,12 +171,14 @@ export class Cakes extends Component {
             // reset the error message  
             let errorMessage = {message: "", show: false};
             this.props.setErrorMessage(errorMessage);
+            this.props.showLoadingSpinner(false);
         }).catch((error) => {
             console.log(error)
             let message = error.response.data.message;
             let show = true;
             let theError = {message,show}
             this.props.setErrorMessage(theError);
+            this.props.showLoadingSpinner(false);
         });
     }
 
@@ -225,7 +229,8 @@ const mapDispatchToProps = {
     removeCake,
     updateCake,
     setCakeCategories,
-    setModalVisibility
+    setModalVisibility,
+    showLoadingSpinner
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Cakes);

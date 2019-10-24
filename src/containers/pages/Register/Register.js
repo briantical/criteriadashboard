@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { withRouter , Link } from 'react-router-dom';
+import SpringSpinner from '@bit/bondz.react-epic-spinners.spring-spinner';
 
-import { setErrorMessage }  from '../../../actions';
+import { setErrorMessage , showLoadingSpinner}  from '../../../actions';
 
 export class Register extends Component {
   componentDidMount(){
@@ -30,11 +31,13 @@ export class Register extends Component {
       if(data.message !== "A user with the given username is already registered"){
         let errorMessage = {message: "", show: false};
         this.props.setErrorMessage(errorMessage);
+        this.props.showLoadingSpinner(false);
         this.props.history.push('/login');
       }else{
         const {message} = data
         let errorMessage = {message, show: false};
         this.props.setErrorMessage(errorMessage);
+        this.props.showLoadingSpinner(false);
       }
     })
     .catch((error) => {
@@ -43,6 +46,7 @@ export class Register extends Component {
       let show = true;
       let theError = {message,show}
       this.props.setErrorMessage(theError);
+      this.props.showLoadingSpinner(false);
     });
   }
 
@@ -55,6 +59,8 @@ export class Register extends Component {
         this.props.setErrorMessage({message,show});
         return;
       }
+
+      this.props.showLoadingSpinner(true);
       const form = event.target;
       const data = new FormData(form);
   
@@ -65,7 +71,7 @@ export class Register extends Component {
     }
 
     render() {
-        const { errorMessage } = this.props;
+        const { errorMessage, spinner } = this.props;
         return (
         <div className='login'>
             <form 
@@ -92,7 +98,7 @@ export class Register extends Component {
                 </tr>
                 </tbody>
             </table>
-            <button>SIGN UP</button>
+            {spinner ? <SpringSpinner color='#000000' size={parseInt('20')}/> : <button>SIGN UP</button>}
             </form>
             
             <Link to="/login" >Login instead</Link>
@@ -103,12 +109,13 @@ export class Register extends Component {
 }
 
 const mapStateToProps = (state) => {
-    const { errorMessage } = state;
-    return {  errorMessage};
+    const { errorMessage, spinner } = state;
+    return {  errorMessage, spinner};
 };
 
 const mapDispatchToProps = {
-    setErrorMessage
+    setErrorMessage,
+    showLoadingSpinner
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Register))
