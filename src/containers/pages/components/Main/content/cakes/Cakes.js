@@ -14,7 +14,8 @@ const storageService = firebase.storage();
 
 export class Cakes extends Component {
 
-    UNSAFE_componentWillMount(){
+    constructor(){
+        super();
         this.getCakes();
         this.getCategories();
     }
