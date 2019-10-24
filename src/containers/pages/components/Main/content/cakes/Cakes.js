@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import SpringSpinner from '@bit/bondz.react-epic-spinners.spring-spinner';
 import axios from 'axios';
 import { secureStorage, pusher, firebase } from '../../../../../../utils';
 import { setErrorMessage, setAvailableCakes, addNewCake, removeCake, updateCake ,setCakeCategories, setModalVisibility, showLoadingSpinner} from '../../../../../../actions';
@@ -14,8 +15,8 @@ const storageService = firebase.storage();
 
 export class Cakes extends Component {
 
-    constructor(){
-        super();
+    constructor(props){
+        super(props)
         this.getCakes();
         this.getCategories();
     }
@@ -45,6 +46,7 @@ export class Cakes extends Component {
     }
 
     getCakes = () =>{
+        this.props.showLoadingSpinner(true);
         let headers = {
             'Authorization': 'Bearer ' + secureStorage.getItem('token').token
         }
@@ -58,8 +60,10 @@ export class Cakes extends Component {
             // reset the error message  
             let errorMessage = {message: "", show: false};
             this.props.setErrorMessage(errorMessage);
+            this.props.showLoadingSpinner(false)
         }).catch((error) => {
             console.log(error)
+            this.props.showLoadingSpinner(false)
             // let message = error.response.data.message;
             // let show = true;
             // let theError = {message,show}
@@ -207,11 +211,15 @@ export class Cakes extends Component {
     }
 
     render() {
-        const { cakes } = this.props;
+        const { cakes, spinner } = this.props;
         
         return (
             <div className="cakes">
-                { cakes.map((cake) => <Tiles cake={cake} key={cake._id} removeCake={this.removeCake} editCake={this.editCake}/>)}
+                { 
+                    spinner ?
+                    <SpringSpinner color='#000000' size={parseInt('20')}/> :
+                    cakes.map((cake) => <Tiles cake={cake} key={cake._id} removeCake={this.removeCake} editCake={this.editCake}/>)
+                }
                 <div className="addCake" onClick={this.showAddModal}>+</div>
             </div>  
         )
@@ -219,8 +227,8 @@ export class Cakes extends Component {
 }
 
 const mapStateToProps = (state) => {
-    const {errorMessage, cakes, categories} = state;
-    return { errorMessage, cakes,categories };
+    const {errorMessage, cakes, categories, spinner} = state;
+    return { errorMessage, cakes,categories, spinner };
 }
 
 const mapDispatchToProps = {
