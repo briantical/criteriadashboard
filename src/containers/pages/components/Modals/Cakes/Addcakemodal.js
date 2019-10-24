@@ -103,7 +103,7 @@ export class Addcakemodal extends Component {
     render() {
         const {categories,hideModal,errorMessage} =this.props;
         return (
-            <div className="cakemodal" onClick={hideModal}>
+            <div className="addcakemodal" onClick={hideModal}>
                 <div className="modaltable" onClick={this.handleOnClick}>
                     <form
                         onSubmit={this.handleSubmit} 
@@ -116,18 +116,18 @@ export class Addcakemodal extends Component {
                                     <td>
                                         <div id="imageholder">
                                             <img id="profile" name="profile" src={cake_image} className="theImage" alt="profilepic"/>
-                                            <input type="file"  accept="image/*" onChange={this.handleImageUploadChange} id="select_image"/>
+                                            <input type="file"  accept="image/*" onChange={this.handleImageUploadChange} id="select_image" required/>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>NAME:</td>
-                                    <td><input type="text" id="name" name="name"  autoComplete="off"/></td>
+                                    <td><input type="text" id="name" name="name"  autoComplete="off" required/></td>
                                 </tr>
                                 <tr>
                                     <td>CATEGORY:</td>
                                     <td>
-                                        <select id="category" name="category" autoComplete="off">
+                                        <select id="category" name="category" autoComplete="off" required>
                                             {
                                                 categories.map((category)=><option value={category._id} key={category._id}>{category.name}</option>)
                                             }
@@ -136,27 +136,27 @@ export class Addcakemodal extends Component {
                                 </tr>
                                 <tr>
                                     <td>DESCRIPTION:</td>
-                                    <td><input type="text" id="description" name="description" autoComplete="off"/></td>
+                                    <td><input type="text" id="description" name="description" autoComplete="off" required/></td>
                                 </tr>
                                 <tr>
                                     <td>COST:</td>
-                                    <td><input type="number" id="cost" name="cost" autoComplete="off"/></td>
+                                    <td><input type="number" id="cost" name="cost" autoComplete="off" required/></td>
                                 </tr>
                                 <tr>
                                     <td>WEIGHT:</td>
-                                    <td><input type="number" id="weight" name="weight" autoComplete="off"/></td>
+                                    <td><input type="number" id="weight" name="weight" autoComplete="off" required/></td>
                                 </tr>
                                 <tr>
                                     <td>SHAPE:</td>
-                                    <td><input type="text" id="shape" name="shape" autoComplete="off"/></td>
+                                    <td><input type="text" id="shape" name="shape" autoComplete="off" required/></td>
                                 </tr>
                                 <tr>
                                     <td>TIERS:</td>
-                                    <td><input type="number" id="tiers" name="tiers" autoComplete="off"/></td>
+                                    <td><input type="number" id="tiers" name="tiers" autoComplete="off" required/></td>
                                 </tr>
                                 <tr>
                                     <td>FLAVOUR:</td>
-                                    <td><input type="text" id="flavour" name="flavour" autoComplete="off"/></td>
+                                    <td><input type="text" id="flavour" name="flavour" autoComplete="off" required/></td>
                                 </tr>
                             </tbody>
                         </table>

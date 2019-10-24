@@ -8,7 +8,11 @@ import { setActiveUser, setErrorMessage, setUserToken, setUserEmail }  from '../
 import { secureStorage } from '../../../utils';
 
 export class Login extends Component {
-  
+    componentDidMount(){
+      let errorMessage = {message: "", show: false};
+      this.props.setErrorMessage(errorMessage);
+    }
+    
    signin = (email,password) =>{
     let params ={
       email,

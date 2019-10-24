@@ -103,7 +103,7 @@ export class Editcakemodal extends Component {
         const { errorMessage } =this.props;
         
         return (
-            <div className="cakemodal" onClick={hideModal}>
+            <div className="editcakemodal" onClick={hideModal}>
                 <div className="modaltable" onClick={this.handleOnClick}>
                     <form
                         onSubmit={this.handleSubmit} 

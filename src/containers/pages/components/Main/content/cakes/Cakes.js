@@ -134,7 +134,7 @@ export class Cakes extends Component {
                     console.log('Sucessfully deleted image')
                 }).catch(function(error) {
                     // Uh-oh, an error occurred!
-                    console.log('an error occured' + error)
+                    console.log('an error occured' + error);
                 });
 
             // reset the error message  

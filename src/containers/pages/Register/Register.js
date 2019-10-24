@@ -6,6 +6,10 @@ import { withRouter , Link } from 'react-router-dom';
 import { setErrorMessage }  from '../../../actions';
 
 export class Register extends Component {
+  componentDidMount(){
+    let errorMessage = {message: "", show: false};
+    this.props.setErrorMessage(errorMessage);
+  }
 
     signup = (email,password) =>{
     let params ={
@@ -21,11 +25,20 @@ export class Register extends Component {
       params,
       options,
     ).then((response) => {
-      let errorMessage = {message: "", show: false};
-      this.props.setErrorMessage(errorMessage);
-      this.props.history.push('/login');
+      console.log('The response' + JSON.stringify(response))
+      const { data } = response;
+      if(data.message !== "A user with the given username is already registered"){
+        let errorMessage = {message: "", show: false};
+        this.props.setErrorMessage(errorMessage);
+        this.props.history.push('/login');
+      }else{
+        const {message} = data
+        let errorMessage = {message, show: false};
+        this.props.setErrorMessage(errorMessage);
+      }
     })
     .catch((error) => {
+      console.log('The error' + error)
       let message = error.response.data.message;
       let show = true;
       let theError = {message,show}
