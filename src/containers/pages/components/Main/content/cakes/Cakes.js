@@ -1,16 +1,27 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
-import SpringSpinner from '@bit/bondz.react-epic-spinners.spring-spinner';
 import axios from 'axios';
+import SpringSpinner from '@bit/bondz.react-epic-spinners.spring-spinner';
+
+//Import created components
 import { secureStorage, pusher, firebase } from '../../../../../../utils';
-import { setErrorMessage, setAvailableCakes, addNewCake, removeCake, updateCake ,setCakeCategories, setModalVisibility, showLoadingSpinner} from '../../../../../../actions';
+import { 
+    setErrorMessage, 
+    setAvailableCakes, 
+    addNewCake, 
+    removeCake, 
+    updateCake ,
+    setCakeCategories, 
+    setModalVisibility, 
+    showLoadingSpinner
+} from '../../../../../../actions';
 import Tiles from './Tiles/Tiles';
+import { addcakemodal } from '../../../../../../constants/modals'
 
-import {addcakemodal} from '../../../../../../constants/modals'
-
+//import the css file
 import './Cakes.css';
 
+//Declare all file constants
 const storageService = firebase.storage();
 
 export class Cakes extends Component {
@@ -40,7 +51,7 @@ export class Cakes extends Component {
         this.props.updateCake(cake.cake);
     }
 
-    showAddModal =()=>{
+    showAddModal = () =>{
         let addNewCake = (...arg) =>this.addCake(...arg)
         this.props.setModalVisibility(true,addcakemodal,{addNewCake})
     }
@@ -64,10 +75,10 @@ export class Cakes extends Component {
         }).catch((error) => {
             console.log(error)
             this.props.showLoadingSpinner(false)
-            // let message = error.response.data.message;
-            // let show = true;
-            // let theError = {message,show}
-            // this.props.setErrorMessage(theError);
+            let message = error.response.data.message;
+            let show = true;
+            let theError = {message,show}
+            this.props.setErrorMessage(theError);
         });
     }
 
@@ -133,7 +144,7 @@ export class Cakes extends Component {
         ).then((response) => {
             const { cake } = response.data;
             const {image } = cake;
-
+            //Delete the image from image
             storageService.refFromURL(image)
                 .delete()
                 .then(function() {

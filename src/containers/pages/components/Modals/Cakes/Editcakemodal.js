@@ -187,4 +187,4 @@ const mapDispatchToProps = {
     setErrorMessage, showLoadingSpinner
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Editcakemodal)
+export default connect(mapStateToProps, mapDispatchToProps)(Editcakemodal);
