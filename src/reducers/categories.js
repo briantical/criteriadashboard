@@ -1,8 +1,8 @@
-import { SET_CAKE_CATEGORIES } from "../constants/action-types";
+import { SET_CATEGORIES } from "../constants/action-types";
 
 const categories = (state = {}, action) => {
     switch (action.type) {
-        case SET_CAKE_CATEGORIES:
+        case SET_CATEGORIES:
             return action.payload;
 
         default:

@@ -5,9 +5,16 @@ import { withRouter } from 'react-router-dom';
 import './Dashboard.css';
 
 import { setModalVisibility ,setActiveUser,setUserEmail } from '../../../actions';
-import { Sidebar , Main , Profilemodal, Editcakemodal, Addcakemodal} from '../components';
-import { profilemodal, editcakemodal, addcakemodal} from '../../../constants/modals';
+import { Sidebar , Main , Profilemodal, Editcakemodal, Addcakemodal, Addsnackmodal, Editsnackmodal} from '../components';
+import { 
+    profilemodal, 
+    editcakemodal, 
+    addcakemodal,
+    addsnackmodal,
+    editsnackmodal
+} from '../../../constants/modals';
 import { secureStorage } from '../../../utils'
+
 
 export class Dashboard extends Component {
 
@@ -32,6 +39,12 @@ export class Dashboard extends Component {
 
             case addcakemodal:
                 return <Addcakemodal hideModal={()=>this.closeModal(editcakemodal)} modalprops={modalprops}/>
+
+            case editsnackmodal:
+                    return <Editsnackmodal hideModal={()=>this.closeModal(editcakemodal)} modalprops={modalprops}/>
+    
+            case addsnackmodal:
+                return <Addsnackmodal hideModal={()=>this.closeModal(editcakemodal)} modalprops={modalprops}/>
         
             default:
                 break;

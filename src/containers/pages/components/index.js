@@ -1,5 +1,5 @@
 import { Main } from './Main';
 import { Sidebar } from './Sidebar';
-import {Profilemodal, Editcakemodal, Addcakemodal} from './Modals'
+import {Profilemodal, Editcakemodal, Addcakemodal, Addsnackmodal, Editsnackmodal} from './Modals'
 
-export { Main , Sidebar ,Profilemodal, Editcakemodal, Addcakemodal };
+export { Main , Sidebar ,Profilemodal, Editcakemodal, Addcakemodal, Addsnackmodal, Editsnackmodal };

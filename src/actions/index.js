@@ -10,8 +10,12 @@ import {
      ADD_NEW_CAKE,
      REMOVE_CAKE,
      UPDATE_CAKE,
-     SET_CAKE_CATEGORIES,
-     SHOW_LOADING_SPINNER
+     SET_CATEGORIES,
+     SHOW_LOADING_SPINNER,
+     SET_AVAILABLE_SNACKS,
+     ADD_NEW_SNACK,
+     REMOVE_SNACK,
+     UPDATE_SNACK
      
     } from "../constants/action-types";
 
@@ -70,12 +74,32 @@ export const updateCake = cake => ({
     payload: cake
 });
 
-export const setCakeCategories = category => ({
-    type: SET_CAKE_CATEGORIES,
+export const setCategories = category => ({
+    type: SET_CATEGORIES,
     payload: category
 });
 
 export const showLoadingSpinner = show => ({
     type: SHOW_LOADING_SPINNER,
     payload: show
+});
+
+export const setAvailableSnacks = snacks => ({
+    type: SET_AVAILABLE_SNACKS,
+    payload: snacks
+});
+
+export const addNewSnack = snack => ({
+    type: ADD_NEW_SNACK,
+    payload: snack
+});
+
+export const removeSnack = snack => ({
+    type: REMOVE_SNACK,
+    payload: snack
+});
+
+export const updateSnack = snack => ({
+    type: UPDATE_SNACK,
+    payload: snack
 });

@@ -9,6 +9,7 @@ import showPage from './showPage';
 import cakes from './cakes';
 import categories from './categories';
 import spinner from './spinner';
+import snacks from './snacks';
 
 export default combineReducers({
     user,
@@ -19,5 +20,6 @@ export default combineReducers({
     showPage,
     cakes,
     categories,
-    spinner
+    spinner,
+    snacks
 });

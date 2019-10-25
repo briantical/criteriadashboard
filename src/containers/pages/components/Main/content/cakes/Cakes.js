@@ -11,12 +11,12 @@ import {
     addNewCake, 
     removeCake, 
     updateCake ,
-    setCakeCategories, 
+    setCategories, 
     setModalVisibility, 
     showLoadingSpinner
 } from '../../../../../../actions';
 import Tiles from './Tiles/Tiles';
-import { addcakemodal } from '../../../../../../constants/modals'
+import { addcakemodal } from '../../../../../../constants/modals';
 
 //import the css file
 import './Cakes.css';
@@ -208,7 +208,7 @@ export class Cakes extends Component {
             {headers},
         ).then((response) => {
             const { categories } = response.data;
-            this.props.setCakeCategories(categories);
+            this.props.setCategories(categories);
             // reset the error message  
             let errorMessage = {message: "", show: false};
             this.props.setErrorMessage(errorMessage);
@@ -248,7 +248,7 @@ const mapDispatchToProps = {
     addNewCake,
     removeCake,
     updateCake,
-    setCakeCategories,
+    setCategories,
     setModalVisibility,
     showLoadingSpinner
 }
