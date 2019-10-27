@@ -49,6 +49,7 @@ export class Login extends Component {
       let theError = {message:error.message ,show:true}
       this.props.setErrorMessage(theError);
       this.props.showLoadingSpinner(true);
+      this.props.showLoadingSpinner(false);
     });
   }
 

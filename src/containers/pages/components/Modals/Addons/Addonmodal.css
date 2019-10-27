@@ -1,0 +1,40 @@
+.addaddonmodal, .editaddonmodal {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    background-color: rgba(189, 189, 192, 0.5);
+}
+
+.modaltable {
+    background-color: white;
+    width: 40%;
+    height: 60%;
+}
+
+.theImage{
+    height: 100%;
+    width: 100%;
+}
+#imageholder{
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    position: relative;
+    overflow: hidden;
+}
+#select_image{
+    width: 100%;
+    height: 100%;
+    vertical-align: middle;
+    text-align: center;
+    padding: 0;
+    margin-top: -52px;
+    color: #FFF;
+    font-weight: bold;
+    font-size: 400px;
+    opacity: 0;
+}

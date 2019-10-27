@@ -24,6 +24,11 @@ export class Sidebarcontent extends Component {
             case 'snacks':
                 this.showPage('snacks',true);
                 break;
+
+            //Display the addons page
+            case 'addons':
+                this.showPage('addons',true);
+                break;
             
             //Display the orders page
             case 'orders':
@@ -53,6 +58,7 @@ export class Sidebarcontent extends Component {
                 <div>CRITERIA CAKES</div>
                 <div onClick={this.handleOnClick} id='cakes'>CAKES</div>
                 <div onClick={this.handleOnClick} id='snacks'>SNACKS</div>
+                <div onClick={this.handleOnClick} id='addons'>ADDONS</div>
                 <div onClick={this.handleOnClick} id='orders'>ORDERS</div>
                 <div onClick={this.handleOnClick} id='wallet'>WALLET</div>
                 <div onClick={this.handleOnClick} id='staff'>STAFF</div>

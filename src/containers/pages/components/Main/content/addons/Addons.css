@@ -1,0 +1,21 @@
+.addons{
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    overflow: auto;
+    height: 100%;
+}
+
+.addAddon{
+    height:50px; 
+    width:50px; 
+    border-radius:50px; 
+    border: 2px solid rgba(189, 189, 192, 1);
+    display: flex;  
+    justify-content: center; 
+    align-items: center;
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 1;
+}

@@ -15,7 +15,11 @@ import {
      SET_AVAILABLE_SNACKS,
      ADD_NEW_SNACK,
      REMOVE_SNACK,
-     UPDATE_SNACK
+     UPDATE_SNACK,
+     SET_AVAILABLE_ADDONS,
+     ADD_NEW_ADDON,
+     REMOVE_ADDON,
+     UPDATE_ADDON
      
     } from "../constants/action-types";
 
@@ -102,4 +106,24 @@ export const removeSnack = snack => ({
 export const updateSnack = snack => ({
     type: UPDATE_SNACK,
     payload: snack
+});
+
+export const setAvailableAddons = addons => ({
+    type: SET_AVAILABLE_ADDONS,
+    payload: addons
+});
+
+export const addNewAddon = addon => ({
+    type: ADD_NEW_ADDON,
+    payload: addon
+});
+
+export const removeAddon = addon => ({
+    type: REMOVE_ADDON,
+    payload: addon
+});
+
+export const updateAddon = addon => ({
+    type: UPDATE_ADDON,
+    payload: addon
 });

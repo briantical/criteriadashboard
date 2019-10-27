@@ -5,13 +5,25 @@ import { withRouter } from 'react-router-dom';
 import './Dashboard.css';
 
 import { setModalVisibility ,setActiveUser,setUserEmail } from '../../../actions';
-import { Sidebar , Main , Profilemodal, Editcakemodal, Addcakemodal, Addsnackmodal, Editsnackmodal} from '../components';
+import { 
+    Sidebar , 
+    Main , 
+    Profilemodal, 
+    Editcakemodal, 
+    Addcakemodal, 
+    Addsnackmodal, 
+    Editsnackmodal,
+    Addaddonmodal, 
+    Editaddonmodal
+} from '../components';
 import { 
     profilemodal, 
     editcakemodal, 
     addcakemodal,
     addsnackmodal,
-    editsnackmodal
+    editsnackmodal,
+    addaddonmodal,
+    editaddonmodal
 } from '../../../constants/modals';
 import { secureStorage } from '../../../utils'
 
@@ -41,10 +53,16 @@ export class Dashboard extends Component {
                 return <Addcakemodal hideModal={()=>this.closeModal(editcakemodal)} modalprops={modalprops}/>
 
             case editsnackmodal:
-                    return <Editsnackmodal hideModal={()=>this.closeModal(editcakemodal)} modalprops={modalprops}/>
+                return <Editsnackmodal hideModal={()=>this.closeModal(editsnackmodal)} modalprops={modalprops}/>
     
             case addsnackmodal:
-                return <Addsnackmodal hideModal={()=>this.closeModal(editcakemodal)} modalprops={modalprops}/>
+                return <Addsnackmodal hideModal={()=>this.closeModal(editsnackmodal)} modalprops={modalprops}/>
+
+            case editaddonmodal:
+                return <Editaddonmodal hideModal={()=>this.closeModal(editaddonmodal)} modalprops={modalprops}/>
+    
+            case addaddonmodal:
+                return <Addaddonmodal hideModal={()=>this.closeModal(editaddonmodal)} modalprops={modalprops}/>
         
             default:
                 break;

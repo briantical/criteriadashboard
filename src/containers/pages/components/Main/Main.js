@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import './Main.css';
-import {Cakes, Snacks, Orders, Wallet, Staff} from './content/'
+import {Cakes, Snacks, Orders, Wallet, Staff, Addons} from './content/'
 
 export class Main extends Component {
 
@@ -13,6 +13,9 @@ export class Main extends Component {
 
             case 'snacks':
                 return <Snacks/>;
+
+            case 'addons':
+                return <Addons/>;
             
             case 'orders':
                 return <Orders/>;
