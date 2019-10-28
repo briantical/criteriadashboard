@@ -33,7 +33,7 @@ export class Addcakemodal extends Component {
             // Observe state change events such as progress, pause, and resume
             // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
             var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            (progress !== 100) ? this.props.showLoadingSpinner(true) : this.props.showLoadingSpinner(false)
+            (progress !== 100) ? this.props.showLoadingSpinner(true) : this.props.showLoadingSpinner(false);
             console.log('Upload is ' + progress + '% done');
             switch (snapshot.state) {
                 case firebase.storage.TaskState.PAUSED: // or 'paused'

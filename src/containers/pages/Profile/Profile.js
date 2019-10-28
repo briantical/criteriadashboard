@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-
+import SpringSpinner from '@bit/bondz.react-epic-spinners.spring-spinner';
 
 import './Profile.css';
 
-import { setActiveUser ,setErrorMessage, setUserToken }  from '../../../actions';
+import { setActiveUser ,setErrorMessage, setUserToken, showLoadingSpinner }  from '../../../actions';
 import { firebase, secureStorage }  from '../../../utils';
 
 const storageService = firebase.storage();
@@ -49,6 +49,7 @@ export class Profile extends Component {
             // reset the error message  
             let errorMessage = {message: "", show: false};
             this.props.setErrorMessage(errorMessage);
+            this.props.showLoadingSpinner(false);
             //Persist the user and token in state
             this.props.setActiveUser(user);
             secureStorage.setItem('token', {token});
@@ -59,6 +60,7 @@ export class Profile extends Component {
             let show = true;
             let theError = {message,show}
             this.props.setErrorMessage(theError);
+            this.props.showLoadingSpinner(false);
         });
     };
  
@@ -80,6 +82,7 @@ export class Profile extends Component {
             // Observe state change events such as progress, pause, and resume
             // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
             var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            (progress !== 100) ? this.props.showLoadingSpinner(true) : this.props.showLoadingSpinner(false);
             console.log('Upload is ' + progress + '% done');
             switch (snapshot.state) {
                 case firebase.storage.TaskState.PAUSED: // or 'paused'
@@ -125,6 +128,9 @@ export class Profile extends Component {
           this.props.setErrorMessage({message,show});
           return;
         }
+
+        this.props.showLoadingSpinner(true);
+
         const form = event.target;
         const data = new FormData(form);
     
@@ -153,7 +159,7 @@ export class Profile extends Component {
       };
 
     render() {
-        const { errorMessage, history:{location:{search}}} = this.props;
+        const { spinner, errorMessage, history:{location:{search}}} = this.props;
         let email = search.slice(1,search.length);
         
         return (
@@ -194,7 +200,7 @@ export class Profile extends Component {
                             </tr>
                         </tbody>
                     </table>
-                    <button>COMPLETE</button>
+                    {spinner ? <SpringSpinner color='#000000' size={parseInt('20')}/> : <button>COMPLETE</button>}
                 </form>
                 {this.props.errorMessage.message}
             </div>
@@ -203,14 +209,15 @@ export class Profile extends Component {
 }
 
 const mapStateToProps = (state) => {
-    const { user, token, errorMessage } = state;
-    return { user ,token,  errorMessage };
+    const { user, token, errorMessage, spinner } = state;
+    return { user ,token,  errorMessage, spinner };
 };
 
 const mapDispatchToProps = {
     setActiveUser,
     setUserToken,
-    setErrorMessage 
+    setErrorMessage,
+    showLoadingSpinner
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Profile))

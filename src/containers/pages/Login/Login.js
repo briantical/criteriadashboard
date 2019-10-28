@@ -29,21 +29,31 @@ export class Login extends Component {
       options
     )
     .then((response) => {
-      const { token, user:{profile:{complete}},user} = response.data;
-      const { setActiveUser, setUserToken, setUserEmail, setErrorMessage, history } = this.props;
+      console.log(response)
+      const {data:{message}} = response;
 
-      setActiveUser(user);
-      setUserToken(token);
-      secureStorage.setItem('token', {token});
-      secureStorage.setItem('user', {user});
-      secureStorage.setItem('email', {email});
-      setUserEmail(email);
+      if(message != 'User is not verified'){
+        const { token, user:{profile:{complete}},user} = response.data;
+        const { setActiveUser, setUserToken, setUserEmail, setErrorMessage, history,showLoadingSpinner } = this.props;
 
-      this.props.showLoadingSpinner(false);
+        setActiveUser(user);
+        setUserToken(token);
+        secureStorage.setItem('token', {token});
+        secureStorage.setItem('user', {user});
+        secureStorage.setItem('email', {email});
+        setUserEmail(email);
 
-      let errorMessage = {message: "", show: false};
-      setErrorMessage(errorMessage);
-      complete ? history.push('/dashboard') : history.push({pathname:'/profile',search:email});
+        showLoadingSpinner(false);
+
+        let errorMessage = {message: "", show: false};
+        setErrorMessage(errorMessage);
+        complete ? history.push('/dashboard') : history.push({pathname:'/profile',search:email});
+      }else{
+        let errorMessage = {message: message, show: true};
+        this.props.setErrorMessage(errorMessage);
+        this.props.showLoadingSpinner(false);
+      }
+      
     })
     .catch((error) => {
       let theError = {message:error.message ,show:true}
