@@ -31,10 +31,23 @@ import { secureStorage } from '../../../utils'
 export class Dashboard extends Component {
 
     componentDidMount = ()=>{
-        let { user, setActiveUser } = this.props;
+        let { user, setActiveUser, history } = this.props;
         user = user == null ? secureStorage.getItem('user').user : user;
-        setActiveUser(user);
-        setUserEmail(secureStorage.getItem('email').email);
+
+        let setupuser = () => {
+            setActiveUser(user);
+            setUserEmail(secureStorage.getItem('email').email);
+        }
+
+        if (user !== null) {
+            const { profile:{complete} } = user;
+            complete ? 
+            setupuser()
+            :
+            history.push('/login');
+        }else{
+            history.push('/login');
+        } 
     }
 
     closeModal =(modal)=>{
@@ -70,8 +83,8 @@ export class Dashboard extends Component {
     }
 
     render() {
-        const { showModal:{show, modal,modalprops} } = this.props;
-    
+        const { user, showModal:{show, modal,modalprops} } = this.props;
+        console.log(user)
         return (
             <div className='dashboard'>
                 <Sidebar/>

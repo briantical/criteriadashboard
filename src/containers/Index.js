@@ -7,8 +7,8 @@ import { Login, Register,Profile, Dashboard , NoMatch} from './pages';
 import { secureStorage } from '../utils';
 
 const mapStateToProps = ( state , ownProps ={ } ) => {
-  const { activeUser } = state;
-  return { activeUser };
+  const { user } = state;
+  return { user };
 };
 
 // returns { token: 'token' }
