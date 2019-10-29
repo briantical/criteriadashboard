@@ -10,7 +10,8 @@ let avatar = require('../../../../../assets/avatar.png');
 export class Siderbarnav extends Component {
 
     openModal = (modal) =>{
-        this.props.setModalVisibility(true, modal, null);
+        const { user } = this.props;
+        this.props.setModalVisibility(true, modal, {user});
     }
 
     closeModal = () =>{

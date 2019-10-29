@@ -83,13 +83,12 @@ export class Dashboard extends Component {
     }
 
     render() {
-        const { user, showModal:{show, modal,modalprops} } = this.props;
-        console.log(user)
+        const {showModal:{show, modal,modalprops} } = this.props;
         return (
             <div className='dashboard'>
                 <Sidebar/>
                 <Main/>
-                { show ? this.chooseModal(modal, modalprops) : null}
+                { show ? this.chooseModal(modal, modalprops ) : null}
             </div>
         )
     }

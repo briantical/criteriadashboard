@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom';
 
 
  const Profilemodal = (props) => {
-    
+    const { modalprops:{user:{profile:{fullName}}}} = props;
     let signout = () =>{
         let headers = {
             'Authorization': 'Bearer ' + secureStorage.getItem('token').token
@@ -30,7 +30,7 @@ import { withRouter } from 'react-router-dom';
 
     return (
         <div className='profilemodal' onClick={()=>props.hideModal()}>
-            <div>LUTAAYA BRIAN IVAN</div>
+            <div>{fullName.toUpperCase()}</div>
             <div onClick={() => signout()}>SIGN OUT</div>
         </div>
     )
