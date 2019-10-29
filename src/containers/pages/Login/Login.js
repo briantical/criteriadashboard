@@ -32,7 +32,7 @@ export class Login extends Component {
       console.log(response)
       const {data:{message}} = response;
 
-      if(message != 'User is not verified'){
+      if(message !== 'User is not verified'){
         const { token, user:{profile:{complete}},user} = response.data;
         const { setActiveUser, setUserToken, setUserEmail, setErrorMessage, history,showLoadingSpinner } = this.props;
 
