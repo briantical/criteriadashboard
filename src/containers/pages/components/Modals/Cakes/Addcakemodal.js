@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import axios from 'axios';
 
 import SpringSpinner from '@bit/bondz.react-epic-spinners.spring-spinner';
-import { setErrorMessage, showLoadingSpinner } from '../../../../../actions';
-import { firebase } from '../../../../../utils';
+import { setErrorMessage, showLoadingSpinner, addNewCategory, removeCategory } from '../../../../../actions';
+import { firebase,pusher, secureStorage } from '../../../../../utils';
 
 import './Cakemodal.css';
 
@@ -13,6 +14,89 @@ const storageService = firebase.storage();
 const storageRef = storageService.ref();
 
 export class Addcakemodal extends Component {
+
+    componentDidMount(){
+        this.channel = pusher.subscribe('categories');
+        this.channel.bind('inserted', this.insertCategory);
+        this.channel.bind('deleted', this.deleteCategory);
+    }
+
+    insertCategory = (category) =>{
+        this.props.addNewCategory(category.category);
+    }
+
+    deleteCategory = (category) =>{
+        this.props.removeCategory(category);
+    }
+
+    addCategory = () =>{
+        let name = document.getElementById('category').value;
+        let description =document.getElementById('category').value;
+
+        
+        let data = {
+            name,
+            description,
+        };
+
+        let options = {
+            responseType: "json",
+        }
+
+        let headers = {
+            'Authorization': 'Bearer ' + secureStorage.getItem('token').token
+        }
+
+        axios.post(
+            'http://localhost:3000/api/v1/category/',
+            data,
+            {headers},
+            options
+        ).then(() => {
+            console.log('Successfully added')
+
+            // reset the error message  
+            let errorMessage = {message: "", show: false};
+            this.props.setErrorMessage(errorMessage);
+            this.props.showLoadingSpinner(false);
+        }).catch((error) => {
+            console.log(error)
+            let message = error.response.data.message;
+            let show = true;
+            let theError = {message,show}
+            this.props.setErrorMessage(theError);
+            this.props.showLoadingSpinner(false);
+        });
+    }
+
+    removeCategory = (event) =>{
+        const form = event.target;
+        const data = new FormData(form);
+
+        let category_id = data.get('category').value;
+        let options = {
+            responseType: "json",
+        }
+
+        let headers = {
+            'Authorization': 'Bearer ' + secureStorage.getItem('token').token
+        }
+
+        axios.delete(
+            `http://localhost:3000/api/v1/category/${category_id}`,
+            {headers},
+            options
+        ).then(() => {
+            let errorMessage = {message: "", show: false};
+            this.props.setErrorMessage(errorMessage);
+        }).catch((error) => {
+            console.log(error)
+            let message = error.response.data.message;
+            let show = true;
+            let theError = {message,show}
+            this.props.setErrorMessage(theError);
+        });
+    }
 
 
     handleImageUploadChange = () =>{
@@ -86,10 +170,13 @@ export class Addcakemodal extends Component {
         const form = event.target;
         const data = new FormData(form);
 
-        this.props.showLoadingSpinner(true)
+        this.props.showLoadingSpinner(true);
+
+        let categoryname = document.getElementById('category').value;
+        let fullcategory = this.props.categories.find(category => category.name !== categoryname);
+        let category = fullcategory._id;
     
         let name = data.get('name');
-        let category = data.get('category');
         let description = data.get('description');
         let cost = data.get('cost');
         let weight = data.get('weight');
@@ -106,6 +193,7 @@ export class Addcakemodal extends Component {
 
     render() {
         const {categories,hideModal,errorMessage, spinner} =this.props;
+        console.log(categories)
         return (
             <div className="addcakemodal" onClick={hideModal}>
                 <div className="modaltable" onClick={this.handleOnClick}>
@@ -131,11 +219,18 @@ export class Addcakemodal extends Component {
                                 <tr>
                                     <td>CATEGORY:</td>
                                     <td>
-                                        <select id="category" name="category" autoComplete="off" required>
+                                        <input type="text" name="category" id="category" list="categories" required/>
+                                        <datalist id="categories">
                                             {
-                                                categories.map((category)=><option value={category._id} key={category._id}>{category.name}</option>)
+                                                categories.map((category)=><option value={category.name} key={category._id}/>)
                                             }
-                                        </select>
+                                        </datalist>
+                                    </td>
+                                    <td>
+                                        <div className="addCategory" onClick={this.addCategory}>+</div>
+                                    </td>
+                                    <td>
+                                        <div className="removeCategory" onClick={this.removeCategory}>-</div>
                                     </td>
                                 </tr>
                                 <tr>
@@ -179,7 +274,9 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
     setErrorMessage, 
-    showLoadingSpinner
+    showLoadingSpinner,
+    addNewCategory,
+    removeCategory
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Addcakemodal)

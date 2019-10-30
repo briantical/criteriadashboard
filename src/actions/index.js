@@ -19,7 +19,9 @@ import {
      SET_AVAILABLE_ADDONS,
      ADD_NEW_ADDON,
      REMOVE_ADDON,
-     UPDATE_ADDON
+     UPDATE_ADDON,
+     ADD_NEW_CATEGORY,
+     REMOVE_CATEGORY
      
     } from "../constants/action-types";
 
@@ -126,4 +128,14 @@ export const removeAddon = addon => ({
 export const updateAddon = addon => ({
     type: UPDATE_ADDON,
     payload: addon
+});
+
+export const addNewCategory = category => ({
+    type: ADD_NEW_CATEGORY,
+    payload: category
+});
+
+export const removeCategory = category => ({
+    type: REMOVE_CATEGORY,
+    payload: category
 });

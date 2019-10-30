@@ -4,7 +4,12 @@ import { withRouter } from 'react-router-dom';
 
 import './Dashboard.css';
 
-import { setModalVisibility ,setActiveUser,setUserEmail } from '../../../actions';
+import { 
+    setModalVisibility,
+    setActiveUser,
+    setUserEmail
+} from '../../../actions';
+
 import { 
     Sidebar , 
     Main , 
