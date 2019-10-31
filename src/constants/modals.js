@@ -5,3 +5,4 @@ export const editsnackmodal = "editsnackmodal";
 export const addsnackmodal = "addsnackmodal";
 export const editaddonmodal = "editaddonmodal";
 export const addaddonmodal = "addaddonmodal";
+export const addcategorymodal = "addcategorymodal";

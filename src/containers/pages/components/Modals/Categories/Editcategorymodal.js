@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import SpringSpinner from '@bit/bondz.react-epic-spinners.spring-spinner';
-import { setErrorMessage, showLoadingSpinner } from '../../../../../actions';
+
 import { firebase } from '../../../../../utils';
+import { setErrorMessage, showLoadingSpinner } from '../../../../../actions'
+import './Categorymodal.css';
 
-import './Cakemodal.css';
-
-const cake_image = require('../../../../../assets/cake.png')
 
 const storageService = firebase.storage();
 const storageRef = storageService.ref();
 
-export class Addcakemodal extends Component {
-
+export class Editcategorymodal extends Component {
 
     handleImageUploadChange = () =>{
         let src = document.getElementById("select_image");
@@ -83,31 +80,36 @@ export class Addcakemodal extends Component {
           this.props.setErrorMessage({message,show});
           return;
         }
+
+        this.props.showLoadingSpinner(true);
+
         const form = event.target;
         const data = new FormData(form);
 
-        this.props.showLoadingSpinner(true)
+        let {modalprops:{category:{name,description,category,image,categoryDetails:{shape,tiers,weight,flavour,cost}}}} = this.props;
     
-        let name = data.get('name');
-        let category = data.get('category');
-        let description = data.get('description');
-        let cost = data.get('cost');
-        let weight = data.get('weight');
-        let shape = data.get('shape');
-        let tiers = data.get('tiers');
-        let flavour = data.get('flavour');
-        let image = document.getElementById('profile').src;    
+        name = data.get('name') || name;
+        category = data.get('category') || category;
+        description = data.get('description') || description;
+        cost = data.get('cost') || cost;
+        weight = data.get('weight') || weight;
+        shape = data.get('shape') || shape;
+        tiers = data.get('tiers') || tiers;
+        flavour = data.get('flavour') || flavour;
+        image = document.getElementById('profile').src || image;    
         
-        const {hideModal,modalprops:{addNewCake}} = this.props;
-        
-        addNewCake({name, category,description,image,flavour,weight,cost,shape,tiers});
+        const {hideModal,modalprops:{editCategory,category:{_id}}} = this.props;
+
+        editCategory(_id,{name, category,description,image,categoryDetails:{flavour,weight,cost,shape,tiers}});
         hideModal()
-    };
+      };
 
     render() {
-        const {categories,hideModal,errorMessage, spinner} =this.props;
+        const {categories,hideModal,modalprops:{category:{name,description,category,image,categoryDetails:{shape,tiers,weight,flavour,cost}}}} =this.props;
+        const { errorMessage, spinner } =this.props;
+        
         return (
-            <div className="addcakemodal" onClick={hideModal}>
+            <div className="editcategorymodal" onClick={hideModal}>
                 <div className="modaltable" onClick={this.handleOnClick}>
                     <form
                         onSubmit={this.handleSubmit} 
@@ -119,19 +121,23 @@ export class Addcakemodal extends Component {
                                 <tr>
                                     <td>
                                         <div id="imageholder">
-                                            <img id="profile" name="profile" src={cake_image} className="theImage" alt="profilepic"/>
-                                            <input type="file"  accept="image/*" onChange={this.handleImageUploadChange} id="select_image" required/>
+                                            <img id="profile" name="profile" src={image} className="theImage" alt="profilepic"/>
+                                            <input type="file"  accept="image/*" onChange={this.handleImageUploadChange} id="select_image"/>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>NAME:</td>
-                                    <td><input type="text" id="name" name="name"  autoComplete="off" required/></td>
+                                    <td><input type="text" placeholder={name} id="name" name="name"  autoComplete="off"/></td>
                                 </tr>
                                 <tr>
                                     <td>CATEGORY:</td>
                                     <td>
-                                        <select id="category" name="category" autoComplete="off" required>
+                                        <select id="category" name="category" autoComplete="off">
+                                            <option
+                                             value={typeof(category) === 'object' ? category._id : category}>
+                                             {typeof(category) !== 'object' ? categories.find((newcategory)=> newcategory._id === category).name : category.name}
+                                            </option>
                                             {
                                                 categories.map((category)=><option value={category._id} key={category._id}>{category.name}</option>)
                                             }
@@ -140,27 +146,27 @@ export class Addcakemodal extends Component {
                                 </tr>
                                 <tr>
                                     <td>DESCRIPTION:</td>
-                                    <td><input type="text" id="description" name="description" autoComplete="off" required/></td>
+                                    <td><input type="text" placeholder={description} id="description" name="description" autoComplete="off"/></td>
                                 </tr>
                                 <tr>
                                     <td>COST:</td>
-                                    <td><input type="number" id="cost" name="cost" autoComplete="off" required/></td>
+                                    <td><input type="number" placeholder={cost} id="cost" name="cost" autoComplete="off"/></td>
                                 </tr>
                                 <tr>
                                     <td>WEIGHT:</td>
-                                    <td><input type="number" id="weight" name="weight" autoComplete="off" required/></td>
+                                    <td><input type="number" placeholder={weight} id="weight" name="weight" autoComplete="off"/></td>
                                 </tr>
                                 <tr>
                                     <td>SHAPE:</td>
-                                    <td><input type="text" id="shape" name="shape" autoComplete="off" required/></td>
+                                    <td><input type="text" placeholder={shape} id="shape" name="shape" autoComplete="off"/></td>
                                 </tr>
                                 <tr>
                                     <td>TIERS:</td>
-                                    <td><input type="number" id="tiers" name="tiers" autoComplete="off" required/></td>
+                                    <td><input type="number" placeholder={tiers} id="tiers" name="tiers" autoComplete="off"/></td>
                                 </tr>
                                 <tr>
                                     <td>FLAVOUR:</td>
-                                    <td><input type="text" id="flavour" name="flavour" autoComplete="off" required/></td>
+                                    <td><input type="text" placeholder={flavour} id="flavour" name="flavour" autoComplete="off"/></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -173,13 +179,12 @@ export class Addcakemodal extends Component {
 }
 
 const mapStateToProps = (state) => {
-    const { errorMessage, categories, spinner } = state;
-    return { errorMessage, categories, spinner }; 
-}
+    const { errorMessage, categories ,spinner} = state;
+    return { errorMessage, categories , spinner};
+};
 
 const mapDispatchToProps = {
-    setErrorMessage, 
-    showLoadingSpinner
+    setErrorMessage, showLoadingSpinner
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Addcakemodal)
+export default connect(mapStateToProps, mapDispatchToProps)(Editcategorymodal);

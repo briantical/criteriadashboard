@@ -39,6 +39,10 @@ export class Cakes extends Component {
         this.channel.bind('updated', this.updateCake);
     }
 
+    componentWillUnmount(){
+        this.props.showLoadingSpinner(false);
+    }
+
     insertCake = (cake) =>{
         this.props.addNewCake(cake.cake);
     }

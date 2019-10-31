@@ -35,6 +35,12 @@ export class Sidebarcontent extends Component {
                 this.showPage('orders',true);
                 break;
             
+            //Display the categories page
+            case 'categories':
+                this.showPage('categories',true);
+                break;
+            
+
             //Display the mobile money wallet transactions
             case 'wallet':
                 this.showPage('wallet',true);
@@ -60,6 +66,7 @@ export class Sidebarcontent extends Component {
                 <div onClick={this.handleOnClick} id='snacks'>SNACKS</div>
                 <div onClick={this.handleOnClick} id='addons'>ADDONS</div>
                 <div onClick={this.handleOnClick} id='orders'>ORDERS</div>
+                <div onClick={this.handleOnClick} id='categories'>CATEGORIES</div>
                 <div onClick={this.handleOnClick} id='wallet'>WALLET</div>
                 <div onClick={this.handleOnClick} id='staff'>STAFF</div>
             </section>

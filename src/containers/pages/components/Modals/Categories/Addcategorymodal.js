@@ -5,14 +5,14 @@ import SpringSpinner from '@bit/bondz.react-epic-spinners.spring-spinner';
 import { setErrorMessage, showLoadingSpinner } from '../../../../../actions';
 import { firebase } from '../../../../../utils';
 
-import './Cakemodal.css';
+import './Categorymodal.css';
 
-const cake_image = require('../../../../../assets/cake.png')
+const category_image = require('../../../../../assets/category.png')
 
 const storageService = firebase.storage();
 const storageRef = storageService.ref();
 
-export class Addcakemodal extends Component {
+export class Addcategorymodal extends Component {
 
 
     handleImageUploadChange = () =>{
@@ -98,16 +98,16 @@ export class Addcakemodal extends Component {
         let flavour = data.get('flavour');
         let image = document.getElementById('profile').src;    
         
-        const {hideModal,modalprops:{addNewCake}} = this.props;
+        const {hideModal,modalprops:{addNewCategory}} = this.props;
         
-        addNewCake({name, category,description,image,flavour,weight,cost,shape,tiers});
+        addNewCategory({name, category,description,image,flavour,weight,cost,shape,tiers});
         hideModal()
     };
 
     render() {
         const {categories,hideModal,errorMessage, spinner} =this.props;
         return (
-            <div className="addcakemodal" onClick={hideModal}>
+            <div className="addcategorymodal" onClick={hideModal}>
                 <div className="modaltable" onClick={this.handleOnClick}>
                     <form
                         onSubmit={this.handleSubmit} 
@@ -119,7 +119,7 @@ export class Addcakemodal extends Component {
                                 <tr>
                                     <td>
                                         <div id="imageholder">
-                                            <img id="profile" name="profile" src={cake_image} className="theImage" alt="profilepic"/>
+                                            <img id="profile" name="profile" src={category_image} className="theImage" alt="profilepic"/>
                                             <input type="file"  accept="image/*" onChange={this.handleImageUploadChange} id="select_image" required/>
                                         </div>
                                     </td>
@@ -182,4 +182,4 @@ const mapDispatchToProps = {
     showLoadingSpinner
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Addcakemodal)
+export default connect(mapStateToProps, mapDispatchToProps)(Addcategorymodal)

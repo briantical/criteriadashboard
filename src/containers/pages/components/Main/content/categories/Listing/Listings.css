@@ -1,0 +1,21 @@
+.listings{
+    border: 1px solid rgba(189, 189, 192, 1);
+    margin: 10px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.removeCategory{
+    height:20px; 
+    width:20px; 
+    border-radius:20px; 
+    border: 2px solid tomato;
+    position: absolute;
+    display: flex;  
+    justify-content: center; 
+    align-items: center;
+    color: tomato;
+    right: 4px;
+    top: 4px;
+}

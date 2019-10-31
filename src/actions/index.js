@@ -80,11 +80,6 @@ export const updateCake = cake => ({
     payload: cake
 });
 
-export const setCategories = category => ({
-    type: SET_CATEGORIES,
-    payload: category
-});
-
 export const showLoadingSpinner = show => ({
     type: SHOW_LOADING_SPINNER,
     payload: show
@@ -128,6 +123,11 @@ export const removeAddon = addon => ({
 export const updateAddon = addon => ({
     type: UPDATE_ADDON,
     payload: addon
+});
+
+export const setCategories = category => ({
+    type: SET_CATEGORIES,
+    payload: category
 });
 
 export const addNewCategory = category => ({

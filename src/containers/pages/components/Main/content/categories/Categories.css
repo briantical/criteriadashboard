@@ -1,0 +1,20 @@
+.categories{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: auto;
+    padding: 10px;
+    height: 100%;
+}
+
+.addcategory{
+    height: 20%;
+    border-bottom: 1px solid  rgba(189, 189, 192, 1);
+    z-index: 1;
+}
+
+.categories_list{
+    display: flex;
+    flex-wrap: wrap;
+    overflow: auto;
+}
