@@ -41,6 +41,7 @@ export class Cakes extends Component {
 
     insertCake = (cake) =>{
         this.props.addNewCake(cake.cake);
+        console.log('Pusher added');
     }
 
     deleteCake = (cake) =>{

@@ -13,7 +13,7 @@ import { withRouter } from 'react-router-dom';
             'Authorization': 'Bearer ' + secureStorage.getItem('token').token
         }
           axios.post( 
-            'process.env.REACT_APP_URL/api/v1/auth/sign-out',
+            `${process.env.REACT_APP_URL}/api/v1/auth/sign-out`,
             null,
             {headers}
           ).then((response) => {
