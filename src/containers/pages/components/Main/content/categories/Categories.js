@@ -53,7 +53,7 @@ export class Categories extends Component {
         }
 
         axios.get(
-            'http://localhost:3000/api/v1/category/',
+            `${process.env.REACT_APP_URL}/api/v1/category/`,
             {headers},
         ).then((response) => {
             const { categories } = response.data;
@@ -88,7 +88,7 @@ export class Categories extends Component {
         }
 
         axios.post(
-            'http://localhost:3000/api/v1/category/',
+            `${process.env.REACT_APP_URL}/api/v1/category/`,
             data,
             {headers},
             options
@@ -119,7 +119,7 @@ export class Categories extends Component {
         }
 
         axios.delete(
-            `http://localhost:3000/api/v1/category/${event.target.id}`,
+            `${process.env.REACT_APP_URL}/api/v1/category/${event.target.id}`,
             {headers},
             options
         ).then(() => {

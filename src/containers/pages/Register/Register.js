@@ -22,7 +22,7 @@ export class Register extends Component {
     };
     
     axios.post( 
-      'http://localhost:3000/api/v1/auth/sign-up',
+      `${process.env.REACT_APP_URL}/api/v1/auth/sign-up`,
       params,
       options,
     ).then((response) => {

@@ -40,7 +40,7 @@ export class Profile extends Component {
         }
 
         axios.put(
-            'http://localhost:3000/api/v1/user/update',
+            `${process.env.REACT_APP_URL}/api/v1/user/update`,
             data,
             {headers},
             options

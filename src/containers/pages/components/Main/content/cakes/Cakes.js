@@ -39,10 +39,6 @@ export class Cakes extends Component {
         this.channel.bind('updated', this.updateCake);
     }
 
-    componentWillUnmount(){
-        this.props.showLoadingSpinner(false);
-    }
-
     insertCake = (cake) =>{
         this.props.addNewCake(cake.cake);
     }
@@ -67,7 +63,7 @@ export class Cakes extends Component {
         }
 
         axios.get(
-            'http://localhost:3000/api/v1/cake/',
+            `${process.env.REACT_APP_URL}/api/v1/cake/`,
             {headers},
         ).then((response) => {
             const { cakes } = response.data;
@@ -111,7 +107,7 @@ export class Cakes extends Component {
         }
 
         axios.post(
-            'http://localhost:3000/api/v1/cake/',
+            `${process.env.REACT_APP_URL}/api/v1/cake/`,
             data,
             {headers},
             options
@@ -142,7 +138,7 @@ export class Cakes extends Component {
         }
 
         axios.delete(
-            `http://localhost:3000/api/v1/cake/${event.target.id}`,
+            `${process.env.REACT_APP_URL}/api/v1/cake/${event.target.id}`,
             {headers},
             options
         ).then((response) => {
@@ -181,7 +177,7 @@ export class Cakes extends Component {
         }
 
         axios.put(
-            `http://localhost:3000/api/v1/cake/${_id}`,
+            `${process.env.REACT_APP_URL}/api/v1/cake/${_id}`,
             data,
             {headers},
             options
@@ -208,7 +204,7 @@ export class Cakes extends Component {
         }
 
         axios.get(
-            'http://localhost:3000/api/v1/category/',
+            `${process.env.REACT_APP_URL}/api/v1/category/`,
             {headers},
         ).then((response) => {
             const { categories } = response.data;
@@ -227,7 +223,7 @@ export class Cakes extends Component {
 
     render() {
         const { cakes, spinner } = this.props;
-        
+       
         return (
             <div className="cakes">
                 { 

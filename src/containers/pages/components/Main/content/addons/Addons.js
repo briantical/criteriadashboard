@@ -63,7 +63,7 @@ export class Addons extends Component {
         }
 
         axios.get(
-            'http://localhost:3000/api/v1/addon/',
+            `${process.env.REACT_APP_URL}/api/v1/addon/`,
             {headers},
         ).then((response) => {
             const { addons } = response.data;
@@ -102,7 +102,7 @@ export class Addons extends Component {
         }
 
         axios.post(
-            'http://localhost:3000/api/v1/addon/',
+            `${process.env.REACT_APP_URL}/api/v1/addon/`,
             data,
             {headers},
             options
@@ -133,7 +133,7 @@ export class Addons extends Component {
         }
 
         axios.delete(
-            `http://localhost:3000/api/v1/addon/${event.target.id}`,
+            `${process.env.REACT_APP_URL}/api/v1/addon/${event.target.id}`,
             {headers},
             options
         ).then((response) => {
@@ -172,7 +172,7 @@ export class Addons extends Component {
         }
 
         axios.put(
-            `http://localhost:3000/api/v1/addon/${_id}`,
+            `${process.env.REACT_APP_URL}/api/v1/addon/${_id}`,
             data,
             {headers},
             options
@@ -199,7 +199,7 @@ export class Addons extends Component {
         }
 
         axios.get(
-            'http://localhost:3000/api/v1/category/',
+            `${process.env.REACT_APP_URL}/api/v1/category/`,
             {headers},
         ).then((response) => {
             const { categories } = response.data;

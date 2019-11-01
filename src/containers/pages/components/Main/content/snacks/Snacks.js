@@ -63,7 +63,7 @@ export class Snacks extends Component {
         }
 
         axios.get(
-            'http://localhost:3000/api/v1/snack/',
+            `${process.env.REACT_APP_URL}/api/v1/snack/`,
             {headers},
         ).then((response) => {
             const { snacks } = response.data;
@@ -108,7 +108,7 @@ export class Snacks extends Component {
         }
 
         axios.post(
-            'http://localhost:3000/api/v1/snack/',
+            `${process.env.REACT_APP_URL}/api/v1/snack/`,
             data,
             {headers},
             options
@@ -139,7 +139,7 @@ export class Snacks extends Component {
         }
 
         axios.delete(
-            `http://localhost:3000/api/v1/snack/${event.target.id}`,
+            `${process.env.REACT_APP_URL}/api/v1/snack/${event.target.id}`,
             {headers},
             options
         ).then((response) => {
@@ -178,7 +178,7 @@ export class Snacks extends Component {
         }
 
         axios.put(
-            `http://localhost:3000/api/v1/snack/${_id}`,
+            `${process.env.REACT_APP_URL}/api/v1/snack/${_id}`,
             data,
             {headers},
             options
@@ -205,7 +205,7 @@ export class Snacks extends Component {
         }
 
         axios.get(
-            'http://localhost:3000/api/v1/category/',
+            `${process.env.REACT_APP_URL}/api/v1/category/`,
             {headers},
         ).then((response) => {
             const { categories } = response.data;

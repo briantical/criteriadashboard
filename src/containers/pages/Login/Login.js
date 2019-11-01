@@ -24,7 +24,7 @@ export class Login extends Component {
     };
     
     axios.post( 
-      'https://criteria-cakes.appspot.com/api/v1/auth/sign-in',
+      `${process.env.REACT_APP_URL}/api/v1/auth/sign-in`,
       params,
       options
     )
