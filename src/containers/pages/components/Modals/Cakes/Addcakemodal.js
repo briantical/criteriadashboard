@@ -98,9 +98,9 @@ export class Addcakemodal extends Component {
         let flavour = data.get('flavour');
         let image = document.getElementById('profile').src;    
         
-        const {hideModal,modalprops:{addNewCake}} = this.props;
+        const {hideModal,modalprops:{createNewCake}} = this.props;
         
-        addNewCake({name, category,description,image,flavour,weight,cost,shape,tiers});
+        createNewCake({name, category,description,image,flavour,weight,cost,shape,tiers});
         hideModal()
     };
 

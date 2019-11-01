@@ -41,7 +41,6 @@ export class Cakes extends Component {
 
     insertCake = (cake) =>{
         this.props.addNewCake(cake.cake);
-        console.log('Pusher added');
     }
 
     deleteCake = (cake) =>{
@@ -53,8 +52,8 @@ export class Cakes extends Component {
     }
 
     showAddModal = () =>{
-        let addNewCake = (...arg) =>this.addCake(...arg)
-        this.props.setModalVisibility(true,addcakemodal,{addNewCake})
+        let createNewCake = (...arg) =>this.addCake(...arg)
+        this.props.setModalVisibility(true,addcakemodal,{createNewCake})
     }
 
     getCakes = () =>{
