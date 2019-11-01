@@ -10,11 +10,9 @@ import {
     addNewCategory, 
     removeCategory,
     setCategories, 
-    setModalVisibility, 
     showLoadingSpinner
 } from '../../../../../../actions';
 import Listings from './Listing/Listings';
-import { addcategorymodal } from '../../../../../../constants/modals';
 
 //import the css file
 import './Categories.css';
@@ -39,11 +37,6 @@ export class Categories extends Component {
 
     deleteCategory = (category) =>{
         this.props.removeCategory(category);
-    }
-
-    showAddModal = () =>{
-        let addNewCategory = (...arg) =>this.addCategory(...arg)
-        this.props.setModalVisibility(true,addcategorymodal,{addNewCategory})
     }
 
     getCategories = () =>{
@@ -202,7 +195,6 @@ const mapDispatchToProps = {
     addNewCategory,
     removeCategory,
     setCategories,
-    setModalVisibility,
     showLoadingSpinner
 }
 

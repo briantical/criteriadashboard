@@ -52,8 +52,8 @@ export class Snacks extends Component {
     }
 
     showAddModal = () =>{
-        let addNewSnack = (...arg) =>this.addSnack(...arg)
-        this.props.setModalVisibility(true,addsnackmodal,{addNewSnack})
+        let createNewSnack = (...arg) =>this.addSnack(...arg)
+        this.props.setModalVisibility(true,addsnackmodal,{createNewSnack})
     }
 
     getSnacks = () =>{

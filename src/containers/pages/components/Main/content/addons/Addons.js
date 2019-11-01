@@ -52,8 +52,8 @@ export class Addons extends Component {
     }
 
     showAddModal = () =>{
-        let addNewAddon = (...arg) =>this.addAddon(...arg)
-        this.props.setModalVisibility(true,addaddonmodal,{addNewAddon})
+        let createNewAddon = (...arg) =>this.addAddon(...arg)
+        this.props.setModalVisibility(true,addaddonmodal,{createNewAddon})
     }
 
     getAddons = () =>{

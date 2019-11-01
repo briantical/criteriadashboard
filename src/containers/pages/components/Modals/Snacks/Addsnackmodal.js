@@ -98,9 +98,9 @@ export class Addsnackmodal extends Component {
         let flavour = data.get('flavour');
         let image = document.getElementById('profile').src;    
         
-        const {hideModal,modalprops:{addNewSnack}} = this.props;
+        const {hideModal,modalprops:{createNewSnack}} = this.props;
         
-        addNewSnack({name, category,description,image,flavour,weight,cost,shape,tiers});
+        createNewSnack({name, category,description,image,flavour,weight,cost,shape,tiers});
         hideModal()
     };
 
