@@ -75,7 +75,7 @@ export class Cakes extends Component {
         }).catch((error) => {
             console.log(error)
             this.props.showLoadingSpinner(false)
-            let message = error.response.data.message;
+            let message = error;
             let show = true;
             let theError = {message,show}
             this.props.setErrorMessage(theError);
@@ -214,7 +214,7 @@ export class Cakes extends Component {
             this.props.setErrorMessage(errorMessage);
         }).catch((error) => {
             console.log(error)
-            let message = error.response.data.message;
+            let message = error;
             let show = true;
             let theError = {message,show}
             this.props.setErrorMessage(theError);

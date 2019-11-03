@@ -19,26 +19,64 @@ const googleMapsClient = require('@google/maps').createClient({
 const avatar = require('../../../assets/avatar.png');
 
 export class Profile extends Component {
+
+    //Create the user cart
+    createCart = (...profiledetails)=>{
+        const [ fullName , avatar, phoneNumber, userName, coordinates, payment  ] = profiledetails;
+
+        let data = { payment }
+
+        let options = {
+            responseType: "json"
+        }
+
+        let headers = {
+            'Authorization' : 'Bearer ' + secureStorage.getItem('token').token
+        }
+        console.log(profiledetails)
+        axios.post(
+            `${process.env.REACT_APP_URL}/api/v1/cart/`,
+            data,
+            {headers},
+            options
+        ).then((response) => {
+            let { _id } = response.data;
+            let cart = _id;
+            this.complete(fullName , avatar, phoneNumber, userName, coordinates, payment, cart);
+            // reset the error message  
+            let errorMessage = {message: "", show: false};
+            this.props.setErrorMessage(errorMessage);
+        }).catch((error) => {
+            let message = error.response.data.message;
+            let show = true;
+            let theError = {message,show}
+            this.props.setErrorMessage(theError);
+            this.props.showLoadingSpinner(false);
+        });
+    }
+
     //Complete the user profile
     complete = (...details) =>{
-        const [ fullName , avatar, phoneNumber, userName, coordinates] = details;
+        const [ fullName , avatar, phoneNumber, userName, coordinates, cart] = details;
         
         let data = {
             fullName,
             avatar,
             phoneNumber,
             userName,
-            coordinates
+            coordinates,
+            cart
         };
         
         let options = {
-            responseType: "json",
+            responseType: "json"
         }
 
         let headers = {
             'Authorization': 'Bearer ' + secureStorage.getItem('token').token
         }
 
+        console.log(data)
         axios.put(
             `${process.env.REACT_APP_URL}/api/v1/user/update`,
             data,
@@ -139,6 +177,7 @@ export class Profile extends Component {
         let avatar = document.getElementById('profile').src;    
         let phoneNumber = data.get('phonenumber');
         let userName = data.get('username');
+        let payment = data.get('payment');
 
         // Geocode an address.
         googleMapsClient.geocode({
@@ -152,7 +191,7 @@ export class Profile extends Component {
                     const {geometry:{location:{lat,lng}}} = address;
 
                     let coordinates = [ lat, lng];
-                    this.complete(fullName , avatar, phoneNumber, userName, coordinates);
+                    this.createCart(fullName , avatar, phoneNumber, userName, coordinates, payment);
                   }
             }
         });
@@ -197,6 +236,10 @@ export class Profile extends Component {
                             <tr>
                                 <td>PHONE NUMBER</td>
                                 <td><input name="phonenumber" id="phonenumber" autoComplete="off" required/></td>
+                            </tr>
+                            <tr>
+                                <td>PAYMENT CHOICE</td>
+                                <td><input name="payment" id="payment" autoComplete="off" required/></td>
                             </tr>
                         </tbody>
                     </table>
