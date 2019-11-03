@@ -33,7 +33,7 @@ export class Profile extends Component {
         let headers = {
             'Authorization' : 'Bearer ' + secureStorage.getItem('token').token
         }
-        console.log(profiledetails)
+
         axios.post(
             `${process.env.REACT_APP_URL}/api/v1/cart/`,
             data,
@@ -76,21 +76,19 @@ export class Profile extends Component {
             'Authorization': 'Bearer ' + secureStorage.getItem('token').token
         }
 
-        console.log(data)
         axios.put(
             `${process.env.REACT_APP_URL}/api/v1/user/update`,
             data,
             {headers},
             options
         ).then((response) => {
-            const { token, user} = response.data;
+            const { user } = response.data;
             // reset the error message  
             let errorMessage = {message: "", show: false};
             this.props.setErrorMessage(errorMessage);
             this.props.showLoadingSpinner(false);
             //Persist the user and token in state
             this.props.setActiveUser(user);
-            secureStorage.setItem('token', {token});
             //Redirect the user to the homepage of login page,
             this.props.history.push('/');
         }).catch((error) => {
