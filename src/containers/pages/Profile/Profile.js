@@ -40,9 +40,11 @@ export class Profile extends Component {
             {headers},
             options
         ).then((response) => {
-            let { _id } = response.data;
+            let { cart:{_id} } = response.data;
             let cart = _id;
+            console.log(cart)
             this.complete(fullName , avatar, phoneNumber, userName, coordinates, payment, cart);
+            console.log(cart)
             // reset the error message  
             let errorMessage = {message: "", show: false};
             this.props.setErrorMessage(errorMessage);
@@ -58,6 +60,8 @@ export class Profile extends Component {
     //Complete the user profile
     complete = (...details) =>{
         const [ fullName , avatar, phoneNumber, userName, coordinates, cart] = details;
+
+        console.log(details)
         
         let data = {
             fullName,
