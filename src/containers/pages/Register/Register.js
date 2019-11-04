@@ -41,8 +41,8 @@ export class Register extends Component {
       }
     })
     .catch((error) => {
-      console.log('The error' + error)
-      let message = error.response.data.message;
+      console.log(error)
+      let message = error;
       let show = true;
       let theError = {message,show}
       this.props.setErrorMessage(theError);

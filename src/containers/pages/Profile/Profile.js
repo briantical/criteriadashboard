@@ -43,7 +43,7 @@ export class Profile extends Component {
             let { cart:{_id} } = response.data;
             let cart = _id;
             console.log(cart)
-            this.complete(fullName , avatar, phoneNumber, userName, coordinates, payment, cart);
+            this.complete(fullName , avatar, phoneNumber, userName, coordinates, cart);
             console.log(cart)
             // reset the error message  
             let errorMessage = {message: "", show: false};
