@@ -42,7 +42,7 @@ export class Register extends Component {
     })
     .catch((error) => {
       console.log(error)
-      let message = error;
+      let message = error.message;
       let show = true;
       let theError = {message,show}
       this.props.setErrorMessage(theError);
