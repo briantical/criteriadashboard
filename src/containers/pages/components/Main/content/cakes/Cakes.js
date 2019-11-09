@@ -112,8 +112,6 @@ export class Cakes extends Component {
             {headers},
             options
         ).then(() => {
-            console.log('Successfully added')
-
             // reset the error message  
             let errorMessage = {message: "", show: false};
             this.props.setErrorMessage(errorMessage);
@@ -222,8 +220,9 @@ export class Cakes extends Component {
     }
 
     render() {
-        const { cakes, spinner } = this.props;
-       
+        let { cakes, spinner } = this.props;
+        cakes = [...new Set(cakes)];
+        
         return (
             <div className="cakes">
                 { 

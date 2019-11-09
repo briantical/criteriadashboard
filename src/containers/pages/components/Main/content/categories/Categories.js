@@ -148,8 +148,9 @@ export class Categories extends Component {
     }
 
     render() {
-        const { categories, spinner,errorMessage } = this.props;
-        
+        let { categories, spinner,errorMessage } = this.props;
+        categories = [...new Set(categories)];
+
         return (
             <div className="categories">
                 <div className="addcategory">

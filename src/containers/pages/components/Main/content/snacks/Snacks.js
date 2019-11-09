@@ -223,7 +223,8 @@ export class Snacks extends Component {
     }
 
     render() {
-        const { snacks, spinner } = this.props;
+        let { snacks, spinner } = this.props;
+        snacks = [...new Set(snacks)];
         
         return (
             <div className="snacks">
