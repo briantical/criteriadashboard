@@ -41,7 +41,7 @@ export class Register extends Component {
       }
     })
     .catch((error) => {
-      console.log(error)
+      console.log('The response' + JSON.stringify(error))
       let message = error.message;
       let show = true;
       let theError = {message,show}
