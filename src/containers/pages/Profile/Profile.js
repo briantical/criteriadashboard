@@ -42,9 +42,7 @@ export class Profile extends Component {
         ).then((response) => {
             let { cart:{_id} } = response.data;
             let cart = _id;
-            console.log(cart)
             this.complete(fullName , avatar, phoneNumber, userName, coordinates, cart);
-            console.log(cart)
             // reset the error message  
             let errorMessage = {message: "", show: false};
             this.props.setErrorMessage(errorMessage);
@@ -180,7 +178,7 @@ export class Profile extends Component {
         let phoneNumber = data.get('phonenumber');
         let userName = data.get('username');
         let payment = data.get('payment');
-
+        
         // Geocode an address.
         googleMapsClient.geocode({
             address
@@ -241,7 +239,14 @@ export class Profile extends Component {
                             </tr>
                             <tr>
                                 <td>PAYMENT CHOICE</td>
-                                <td><input name="payment" id="payment" autoComplete="off" required/></td>
+                                <td>
+                                    <input name="payment" id="mobile_money" autoComplete="off" required type="radio" value="Mobile Money"/>
+                                    <label htmlFor="mobile_money">Mobile Money</label>
+                                </td>
+                                <td>
+                                    <input name="payment" id="other_payment" autoComplete="off" required type="radio" value="Other Payment"/>
+                                    <label htmlFor="other_payment">Other</label>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
