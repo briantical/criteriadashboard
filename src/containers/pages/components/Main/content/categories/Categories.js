@@ -86,8 +86,8 @@ export class Categories extends Component {
             {headers},
             options
         ).then(() => {
-            console.log('Successfully added')
-
+            document.getElementById("name").value = "";
+            document.getElementById("description").value = "";
             // reset the error message  
             let errorMessage = {message: "", show: false};
             this.props.setErrorMessage(errorMessage);
