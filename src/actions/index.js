@@ -24,7 +24,10 @@ import {
   REMOVE_CATEGORY,
   SET_AVAILABLE_ORDERS,
   REMOVE_ORDER,
-  UPDATE_ORDER
+  UPDATE_ORDER,
+  ADD_NEW_ORDER,
+  SET_AVAILABLE_CART_ITEMS,
+  UPDATE_CART
 } from "../constants/action-types";
 
 export const setActiveUser = user => ({
@@ -155,4 +158,19 @@ export const updateOrder = order => ({
 export const removeOrder = order => ({
   type: REMOVE_ORDER,
   payload: order
+});
+
+export const addNewOrder = order => ({
+  type: ADD_NEW_ORDER,
+  payload: order
+});
+
+export const setAvailableCartItems = cart => ({
+  type: SET_AVAILABLE_CART_ITEMS,
+  payload: cart
+});
+
+export const updateCart = cart => ({
+  type: UPDATE_CART,
+  payload: cart
 });

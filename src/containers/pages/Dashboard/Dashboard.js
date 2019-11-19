@@ -34,15 +34,12 @@ import { secureStorage } from "../../../utils";
 
 export class Dashboard extends Component {
   componentDidMount = () => {
-    let token = secureStorage.getItem("token");
-    console.log("The token 1:" + token);
     let { user, setActiveUser, history } = this.props;
 
     user =
       secureStorage.getItem("user") !== null
         ? secureStorage.getItem("user").user
         : user;
-    console.log(user);
 
     let setupuser = () => {
       setActiveUser(user);
@@ -128,7 +125,6 @@ export class Dashboard extends Component {
 
   render = () => {
     let token = secureStorage.getItem("token");
-    console.log("The token 2:" + token);
     const {
       showModal: { show, modal, modalprops },
       history

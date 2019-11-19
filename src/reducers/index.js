@@ -12,6 +12,7 @@ import spinner from "./spinner";
 import snacks from "./snacks";
 import addons from "./addons";
 import orders from "./orders";
+import carts from "./carts";
 
 export default combineReducers({
   user,
@@ -25,5 +26,6 @@ export default combineReducers({
   spinner,
   snacks,
   addons,
-  orders
+  orders,
+  carts
 });
