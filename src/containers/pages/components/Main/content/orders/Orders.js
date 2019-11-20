@@ -3,18 +3,19 @@ import { connect } from "react-redux";
 import axios from "axios";
 import SpringSpinner from "@bit/bondz.react-epic-spinners.spring-spinner";
 
-import { secureStorage } from "../../../../../../utils";
+import { secureStorage, pusher } from "../../../../../../utils";
 
 import {
   setAvailableCartItems,
   showLoadingSpinner,
   setAvailableOrders,
   setErrorMessage,
+  addNewOrder,
   removeOrder,
   updateCart,
   updateOrder
 } from "../../../../../../actions";
-
+import Listings from "./Listing/Listings";
 import "./Orders.css";
 
 export class Orders extends Component {
@@ -23,6 +24,62 @@ export class Orders extends Component {
     this.getOrders();
     this.getCart();
   }
+
+  componentDidMount() {
+    this.channel = pusher.subscribe("categories");
+    this.channel.bind("inserted", this.insertOrder);
+    this.channel.bind("deleted", this.deleteOrder);
+  }
+
+  insertOrder = order => {
+    this.props.addNewCategory(order.order);
+  };
+
+  deleteOrder = order => {
+    this.props.removeOrder(order);
+  };
+
+  makeOrder = orderfields => {
+    const { customer, cart, comments, orderDate, orderStatus } = orderfields;
+
+    let data = {
+      customer,
+      cart,
+      comments,
+      orderDate,
+      orderStatus
+    };
+
+    let options = {
+      responseType: "json"
+    };
+
+    let headers = {
+      Authorization: "Bearer " + secureStorage.getItem("token").token
+    };
+
+    axios
+      .post(
+        `${process.env.REACT_APP_URL}/api/v1/order/`,
+        data,
+        { headers },
+        options
+      )
+      .then(() => {
+        // reset the error message
+        let errorMessage = { message: "", show: false };
+        this.props.setErrorMessage(errorMessage);
+        this.props.showLoadingSpinner(false);
+      })
+      .catch(error => {
+        console.log(error);
+        let message = error.response.data.message;
+        let show = true;
+        let theError = { message, show };
+        this.props.setErrorMessage(theError);
+        this.props.showLoadingSpinner(false);
+      });
+  };
 
   getCart = () => {
     this.props.showLoadingSpinner(true);
@@ -81,6 +138,35 @@ export class Orders extends Component {
       });
   };
 
+  removeOrder = event => {
+    let options = {
+      responseType: "json"
+    };
+
+    let headers = {
+      Authorization: "Bearer " + secureStorage.getItem("token").token
+    };
+
+    axios
+      .delete(
+        `${process.env.REACT_APP_URL}/api/v1/order/${event.target.id}`,
+        { headers },
+        options
+      )
+      .then(() => {
+        // reset the error message
+        let errorMessage = { message: "", show: false };
+        this.props.setErrorMessage(errorMessage);
+      })
+      .catch(error => {
+        console.log(error);
+        let message = error.response.data.message;
+        let show = true;
+        let theError = { message, show };
+        this.props.setErrorMessage(theError);
+      });
+  };
+
   handleSubmit = event => {
     event.preventDefault();
     if (!event.target.checkValidity()) {
@@ -104,7 +190,8 @@ export class Orders extends Component {
     let comments = data.get("comments");
     let orderDate = Date();
     let orderStatus = "Not yet Accepted";
-    let customer = this.addCategory({
+
+    this.makeOrder({
       customer,
       cart,
       comments,
@@ -117,7 +204,8 @@ export class Orders extends Component {
     let {
       spinner,
       errorMessage,
-      carts: { items }
+      carts: { items },
+      orders
     } = this.props;
 
     return (
@@ -140,7 +228,7 @@ export class Orders extends Component {
                       autoComplete="off"
                       required
                       readOnly
-                      placeholder={items}
+                      placeholder={JSON.stringify(items)}
                     />
                   </td>
                 </tr>
@@ -170,7 +258,14 @@ export class Orders extends Component {
           {spinner ? (
             <SpringSpinner color="#000000" size={parseInt("20")} />
           ) : (
-            "THIS IS THE ORDERS PAGE"
+            orders.map(order => (
+              <Listings
+                order={order}
+                key={order._id}
+                removeOrder={this.removeOrder}
+                editOrder={this.editOrder}
+              />
+            ))
           )}
         </div>
       </div>
@@ -179,8 +274,8 @@ export class Orders extends Component {
 }
 
 const mapStateToProps = state => {
-  const { errorMessage, spinner, user, carts } = state;
-  return { errorMessage, spinner, user, carts };
+  const { errorMessage, spinner, user, carts, orders } = state;
+  return { errorMessage, spinner, user, carts, orders };
 };
 
 const mapDispatchToProps = {
@@ -188,6 +283,7 @@ const mapDispatchToProps = {
   showLoadingSpinner,
   setAvailableOrders,
   setErrorMessage,
+  addNewOrder,
   removeOrder,
   updateCart,
   updateOrder
