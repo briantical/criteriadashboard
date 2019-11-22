@@ -98,7 +98,36 @@ export class Orders extends Component {
       .then(response => {
         const { cart } = response.data;
         this.props.setAvailableCartItems(cart);
-        console.log(cart);
+        // reset the error message
+        let errorMessage = { message: "", show: false };
+        this.props.setErrorMessage(errorMessage);
+        this.props.showLoadingSpinner(false);
+      })
+      .catch(error => {
+        console.log(error);
+        let message = error;
+        let show = true;
+        let theError = { message, show };
+        this.props.setErrorMessage(theError);
+      });
+  };
+  getCartItems = () => {
+    this.props.showLoadingSpinner(true);
+    let headers = {
+      Authorization: "Bearer " + secureStorage.getItem("token").token
+    };
+
+    let {
+      user: {
+        cart: { _id: cartID }
+      }
+    } = this.props;
+
+    axios
+      .get(`${process.env.REACT_APP_URL}/api/v1/cart/${cartID}`, { headers })
+      .then(response => {
+        const { cart } = response.data;
+        this.props.setAvailableCartItems(cart);
         // reset the error message
         let errorMessage = { message: "", show: false };
         this.props.setErrorMessage(errorMessage);
@@ -124,6 +153,7 @@ export class Orders extends Component {
       .then(response => {
         const { orders } = response.data;
         this.props.setAvailableOrders(orders);
+
         // reset the error message
         let errorMessage = { message: "", show: false };
         this.props.setErrorMessage(errorMessage);
@@ -207,6 +237,7 @@ export class Orders extends Component {
       carts: { items },
       orders
     } = this.props;
+    orders = [...new Set(orders)];
 
     return (
       <div className="orders">

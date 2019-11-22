@@ -13,6 +13,7 @@ export class Listings extends Component {
 
   render() {
     const { order, removeOrder } = this.props;
+
     let {
       _id,
       orderStatus,
@@ -29,7 +30,6 @@ export class Listings extends Component {
         <div id={_id} className="removeOrder" onClick={removeOrder}>
           -
         </div>
-        {/* {JSON.stringify(order)} */}
         <p>Client:{fullName}</p>
         <p>Contact:{phoneNumber}</p>
         <p>Comments:{comments}</p>
@@ -43,8 +43,8 @@ export class Listings extends Component {
 }
 
 const mapStateToProps = state => {
-  const {} = state;
-  return {};
+  const { showModal } = state;
+  return { showModal };
 };
 
 const mapDispatchToProps = {
