@@ -43,7 +43,6 @@ export class Dashboard extends Component {
 
     let setupuser = () => {
       setActiveUser(user);
-      setUserEmail(secureStorage.getItem("email").email);
     };
 
     if (user !== null) {
