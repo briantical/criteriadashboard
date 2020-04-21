@@ -17,10 +17,6 @@ import { firebase, secureStorage } from "../../../utils";
 const storageService = firebase.storage();
 const storageRef = storageService.ref();
 
-const googleMapsClient = require("@google/maps").createClient({
-  key: process.env.REACT_APP_GOOGLE_MAPS_API
-});
-
 const avatar = require("../../../assets/avatar.png");
 
 export class Profile extends Component {
@@ -232,42 +228,13 @@ export class Profile extends Component {
     const data = new FormData(form);
 
     let fullName = data.get("fullname");
-    let address = data.get("address");
+    let location = data.get("address");
     let avatar = document.getElementById("profile").src;
     let phoneNumber = data.get("phonenumber");
     let userName = data.get("username");
     let payment = data.get("payment");
 
-    // Geocode an address.
-    googleMapsClient.geocode(
-      {
-        address
-      },
-      (err, response) => {
-        if (!err) {
-          let data = response.json.results;
-          if (Array.isArray(data) || data.length) {
-            // array does exist, is  an array, or is not empty
-            let address = data[0];
-            const {
-              geometry: {
-                location: { lat, lng }
-              }
-            } = address;
-
-            let coordinates = [lat, lng];
-            this.createCart(
-              fullName,
-              avatar,
-              phoneNumber,
-              userName,
-              coordinates,
-              payment
-            );
-          }
-        }
-      }
-    );
+    this.createCart(fullName, avatar, phoneNumber, userName, location, payment);
   };
 
   render() {
